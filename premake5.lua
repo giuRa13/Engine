@@ -27,6 +27,8 @@ project "Engine"
     location "Engine"
     kind "StaticLib"
     language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
 
     targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
     objdir ("bin-int/" .. OutputDir .. "/%{prj.name}")
@@ -65,12 +67,24 @@ project "Engine"
     }
 
     filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
         buildoptions { "/utf-8"}
-
+    
     filter "configurations:Debug"
+		defines "HZ_DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "HZ_RELEASE"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Dist"
+		defines "HZ_DIST"
+		runtime "Release"
+		optimize "on"
+    --[[filter "configurations:Debug"
 		defines "DEBUG"
 		symbols "On"
         buildoptions "/MDd"
@@ -83,7 +97,7 @@ project "Engine"
 	filter "configurations:Dist"
 		defines "DIST"
 		optimize "On"
-        buildoptions "/MD"
+        buildoptions "/MD"]]--
 
 
 ---------------------------------------------------
@@ -91,6 +105,8 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
 
 	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
 	objdir ("bin-int/" .. OutputDir .. "/%{prj.name}")
@@ -107,6 +123,7 @@ project "Sandbox"
 	{
 		"Engine/Vendor/spdlog/include",
 		"Engine/src",
+        "Engine/Vendor",
         "%{IncludeDir.glm}"
 	}
 
@@ -115,18 +132,31 @@ project "Sandbox"
 		"Engine"
 	}
 
-	filter "system:windows"
-		cppdialect "C++17"
-		staticruntime "On"
+	filter "system:windows"	
 		systemversion "latest"
         buildoptions { "/utf-8"}
 
 		defines
 		{
-			--"HZ_PLATFORM_WINDOWS"
+
 		}
 
-	filter "configurations:Debug"
+    
+    filter "configurations:Debug"
+		defines "DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "RELEASE"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Dist"
+		defines "DIST"
+		runtime "Release"
+		optimize "on"
+    --[[filter "configurations:Debug"
 		defines "DEBUG"
 		symbols "On"
         buildoptions "/MDd"
@@ -139,4 +169,4 @@ project "Sandbox"
 	filter "configurations:Dist"
 		defines "DIST"
 		optimize "On"
-        buildoptions "/MD"
+        buildoptions "/MD"]]--

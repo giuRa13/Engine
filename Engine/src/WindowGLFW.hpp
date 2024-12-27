@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Window.hpp"
+#include "Renderer/GraphicsContext.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -27,8 +28,9 @@ namespace ENGINE
 	private:
 		virtual void Init(const WindowProps& props);
 		virtual void Shutdown();
+		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
 
-	private:
 		struct WindowData
 		{
 			std::string Title;
@@ -39,7 +41,6 @@ namespace ENGINE
 		};
 
 		WindowData m_Data;
-		GLFWwindow* m_Window;
 
 	};
 }
