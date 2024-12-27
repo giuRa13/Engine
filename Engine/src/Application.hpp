@@ -6,6 +6,7 @@
 #include "Window.hpp"
 #include "Layers/LayerStack.hpp"
 #include "Layers/ImGuiLayer.hpp"
+#include "Renderer/Shader.hpp"
 
 namespace ENGINE 
 {
@@ -36,6 +37,9 @@ namespace ENGINE
 		LayerStack m_LayerStack;
 
 		static Application* s_Instance;
+
+		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		std::unique_ptr<Shader> m_Shader;
 
 	};
 
