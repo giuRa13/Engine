@@ -7,6 +7,8 @@
 #include "Layers/LayerStack.hpp"
 #include "Layers/ImGuiLayer.hpp"
 #include "Renderer/Shader.hpp"
+#include "Renderer/VertexArray.hpp"
+
 
 namespace ENGINE 
 {
@@ -38,8 +40,10 @@ namespace ENGINE
 
 		static Application* s_Instance;
 
-		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
-		std::unique_ptr<Shader> m_Shader;
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<VertexArray> m_VertexArray;
+		std::shared_ptr<Shader> m_BlueShader;
+		std::shared_ptr<VertexArray> m_SquareVA;
 
 	};
 
