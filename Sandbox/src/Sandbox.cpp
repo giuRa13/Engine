@@ -73,7 +73,7 @@ public:
 				color = v_Color;
 			}
 		)";
-		m_Shader.reset(ENGINE::Shader::Create(vertexSrc, fragmentSrc));
+		m_Shader = ENGINE::Shader::Create("VertexPosColor", vertexSrc, fragmentSrc);
 		////////////////////////////////////////////////////////////
 
 		m_SquareVA.reset(ENGINE::VertexArray::Create());
@@ -127,45 +127,15 @@ public:
 				color = vec4(u_Color, 1.0);
 			}
 		)";
-		m_FlatColorShader.reset(ENGINE::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+		m_FlatColorShader = ENGINE::Shader::Create("FlatColor", flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
 		////////////////////////////////////////////////////////////
-		std::string textureShaderVertexSrc = R"(
-			#version 450 core
-			
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec2 a_TexCoord;
 
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Transform;
-
-			out vec2 v_TexCoord;
-
-			void main()
-			{
-				v_TexCoord = a_TexCoord;
-				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
-			}
-		)";
-		std::string textureShaderFragmentSrc = R"(
-			#version 450 core
-			
-			layout(location = 0) out vec4 color;
-
-			in vec2 v_TexCoord;
-			
-			uniform sampler2D u_Texture;
-
-			void main()
-			{
-				color = texture(u_Texture, v_TexCoord);
-			}
-		)";
-		m_TextureShader.reset(ENGINE::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+		auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 
 		m_Texture = ENGINE::Texture2D::Create("assets/textures/Checkerboard.png");
 		//m_FaceTexture = ENGINE::Texture2D::Create("assets/textures/awesomeface.png");
-		std::dynamic_pointer_cast<ENGINE::OpenGLShader>(m_TextureShader)->Bind();
-		std::dynamic_pointer_cast<ENGINE::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<ENGINE::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<ENGINE::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 
@@ -201,10 +171,11 @@ public:
 		m_Camera.SetRotation(m_CameraRotation);
 		ENGINE::Renderer::BeginScene(m_Camera);
 		{
+			auto textureShader = m_ShaderLibrary.Get("Texture");
 			m_Texture->Bind();
-			ENGINE::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+			ENGINE::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 			//m_FaceTexture->Bind();
-			//ENGINE::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+			//ENGINE::Renderer::Submit(textureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 			glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 			std::dynamic_pointer_cast<ENGINE::OpenGLShader>(m_FlatColorShader)->Bind();
@@ -251,9 +222,10 @@ public:
 
 
 private:
+	ENGINE::ShaderLibrary m_ShaderLibrary;
 	ENGINE::Ref<ENGINE::Shader> m_Shader;
 	ENGINE::Ref<ENGINE::VertexArray> m_VertexArray;
-	ENGINE::Ref<ENGINE::Shader> m_FlatColorShader, m_TextureShader;
+	ENGINE::Ref<ENGINE::Shader> m_FlatColorShader;
 	ENGINE::Ref<ENGINE::VertexArray> m_SquareVA;
 	ENGINE::Ref<ENGINE::Texture2D> m_Texture, m_FaceTexture;
 
