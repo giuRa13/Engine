@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Events/Event.hpp"
+#include "../Timestep.hpp"
 #include <string>
 
 
@@ -15,7 +16,7 @@ namespace ENGINE
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnEvent(Event& event) {}
 
 		virtual void OnImGuiRender() {}

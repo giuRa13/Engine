@@ -6,9 +6,6 @@
 #include "Window.hpp"
 #include "Layers/LayerStack.hpp"
 #include "Layers/ImGuiLayer.hpp"
-#include "Renderer/Shader.hpp"
-#include "Renderer/VertexArray.hpp"
-#include "Renderer/OrthographicCamera.hpp"
 
 
 namespace ENGINE 
@@ -38,14 +35,9 @@ namespace ENGINE
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+		float m_LastFrameTime = 0.0f;
 
 		static Application* s_Instance;
-
-		OrthographicCamera m_Camera;
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexArray> m_VertexArray;
-		std::shared_ptr<Shader> m_BlueShader;
-		std::shared_ptr<VertexArray> m_SquareVA;
 
 	};
 
