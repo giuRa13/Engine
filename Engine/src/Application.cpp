@@ -4,6 +4,7 @@
 #include "Input.hpp"
 #include "WindowInput.hpp"
 #include "Events/KeyCode.hpp"
+#include "Renderer/Renderer.hpp"
 #include <glad/glad.h>
 
 
@@ -15,6 +16,7 @@ namespace ENGINE
 
 
 	Application::Application()
+		: m_Camera(-1.6f, 1.6f, -0.9f, 0.9f) //Aspect ratio 16:9
 	{
 		s_Instance = this;
 
@@ -55,11 +57,14 @@ namespace ENGINE
 			out vec3 v_Position;
 			out vec4 v_Color;
 
+			uniform mat4 u_ViewProjection;
+
 			void main()
 			{
 				v_Position = a_Position;
 				v_Color = a_Color;
-				gl_Position = vec4(a_Position, 1.0);	
+				//gl_Position = vec4(a_Position, 1.0);	
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 			}
 		)";
 		std::string fragmentSrc = R"(
@@ -105,10 +110,14 @@ namespace ENGINE
 			
 			layout(location = 0) in vec3 a_Position;
 			out vec3 v_Position;
+
+			uniform mat4 u_ViewProjection;
+
 			void main()
 			{
 				v_Position = a_Position;
-				gl_Position = vec4(a_Position, 1.0);	
+				//gl_Position = vec4(a_Position, 1.0);	
+				gl_Position = u_ViewProjection * vec4(a_Position, 1.0);	
 			}
 		)";
 		std::string blueShaderFragmentSrc = R"(
@@ -157,18 +166,17 @@ namespace ENGINE
 			if (Input::IsKeyPressed(Key::Escape))
 				m_Running = false;
 
-			//glClearColor(1, 0, 1, 1);
-			glClearColor(0.1f, 0.1f, 0.1f, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+			RenderCommand::Clear();
 
-
-			m_BlueShader->Bind();
-			m_SquareVA->Bind();
-			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
-
-			m_Shader->Bind();
-			m_VertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			m_Camera.SetPosition({ 0.5f, 0.5f, 0.0f });
+			m_Camera.SetRotation(45.0f);
+			Renderer::BeginScene(m_Camera);
+			{
+				Renderer::Submit(m_BlueShader, m_SquareVA);
+				Renderer::Submit(m_Shader, m_VertexArray);
+			}
+			Renderer::EndScene();
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();

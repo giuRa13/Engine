@@ -84,20 +84,6 @@ project "Engine"
 		defines "HZ_DIST"
 		runtime "Release"
 		optimize "on"
-    --[[filter "configurations:Debug"
-		defines "DEBUG"
-		symbols "On"
-        buildoptions "/MDd"
-
-	filter "configurations:Release"
-		defines "RELEASE"
-		optimize "On"
-        buildoptions "/MD"
-
-	filter "configurations:Dist"
-		defines "DIST"
-		optimize "On"
-        buildoptions "/MD"]]--
 
 
 ---------------------------------------------------
@@ -156,17 +142,3 @@ project "Sandbox"
 		defines "DIST"
 		runtime "Release"
 		optimize "on"
-    --[[filter "configurations:Debug"
-		defines "DEBUG"
-		symbols "On"
-        buildoptions "/MDd"
-
-	filter "configurations:Release"
-		defines "RELEASE"
-		optimize "On"
-        buildoptions "/MD"
-
-	filter "configurations:Dist"
-		defines "DIST"
-		optimize "On"
-        buildoptions "/MD"]]--

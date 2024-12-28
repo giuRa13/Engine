@@ -8,6 +8,7 @@
 #include "Layers/ImGuiLayer.hpp"
 #include "Renderer/Shader.hpp"
 #include "Renderer/VertexArray.hpp"
+#include "Renderer/OrthographicCamera.hpp"
 
 
 namespace ENGINE 
@@ -40,6 +41,7 @@ namespace ENGINE
 
 		static Application* s_Instance;
 
+		OrthographicCamera m_Camera;
 		std::shared_ptr<Shader> m_Shader;
 		std::shared_ptr<VertexArray> m_VertexArray;
 		std::shared_ptr<Shader> m_BlueShader;

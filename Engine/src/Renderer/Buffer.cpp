@@ -11,8 +11,8 @@ namespace ENGINE
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:    ENGINE_CORE_WARN("RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::OpenGL:  return new OpenGLVertexBuffer(vertices, size);
+		case RendererAPI::API::None:    ENGINE_CORE_WARN("RendererAPI::None is currently not supported!"); return nullptr;
+		case RendererAPI::API::OpenGL:  return new OpenGLVertexBuffer(vertices, size);
 		}
 		return nullptr;
 	}
@@ -21,8 +21,8 @@ namespace ENGINE
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:    ENGINE_CORE_WARN("RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::OpenGL:  return new OpenGLIndexBuffer(indices, size);
+		case RendererAPI::API::None:    ENGINE_CORE_WARN("RendererAPI::None is currently not supported!"); return nullptr;
+		case RendererAPI::API::OpenGL:  return new OpenGLIndexBuffer(indices, size);
 		}
 		return nullptr;
 	}
