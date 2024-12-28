@@ -10,10 +10,7 @@ class ExampleLayer : public ENGINE::Layer
 
 public:
 	ExampleLayer()
-		: Layer("Example"),
-		m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), //(Aspect ratio 16:9)
-		m_CameraPosition(0.0f),
-		m_SquarePosition(0.0f)
+		: Layer("Example"), m_CameraController(1280.0f / 720.0f, true), m_SquarePosition(0.0f)
 	{
 		////////////////////////////////////////////////////////////
 		m_VertexArray.reset(ENGINE::VertexArray::Create());
@@ -141,18 +138,7 @@ public:
 
 	void OnUpdate(ENGINE::Timestep ts) override
 	{
-		if (ENGINE::Input::IsKeyPressed(ENGINE_KEY_A))
-			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
-		else if (ENGINE::Input::IsKeyPressed(ENGINE_KEY_D))
-			m_CameraPosition.x += m_CameraMoveSpeed * ts;
-		if (ENGINE::Input::IsKeyPressed(ENGINE_KEY_W))
-			m_CameraPosition.y += m_CameraMoveSpeed * ts;
-		else if (ENGINE::Input::IsKeyPressed(ENGINE_KEY_S))
-			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
-		if (ENGINE::Input::IsKeyPressed(ENGINE_KEY_Q))
-			m_CameraRotation += m_CameraRotationSpeed * ts;
-		if (ENGINE::Input::IsKeyPressed(ENGINE_KEY_E))
-			m_CameraRotation -= m_CameraRotationSpeed * ts;
+		m_CameraController.OnUpdate(ts);
 
 		if (ENGINE::Input::IsKeyPressed(ENGINE_KEY_J))
 			m_SquarePosition.x -= m_SquareMoveSpeed * ts;
@@ -167,9 +153,7 @@ public:
 		ENGINE::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		ENGINE::RenderCommand::Clear();
 
-		m_Camera.SetPosition(m_CameraPosition);
-		m_Camera.SetRotation(m_CameraRotation);
-		ENGINE::Renderer::BeginScene(m_Camera);
+		ENGINE::Renderer::BeginScene(m_CameraController.GetCamera());
 		{
 			auto textureShader = m_ShaderLibrary.Get("Texture");
 			m_Texture->Bind();
@@ -218,6 +202,8 @@ public:
 	void OnEvent(ENGINE::Event& event) override
 	{
 		//ENGINE_APP_DEBUG("{0}", event.ToString());
+
+		m_CameraController.OnEvent(event);
 	}
 
 
@@ -229,7 +215,7 @@ private:
 	ENGINE::Ref<ENGINE::VertexArray> m_SquareVA;
 	ENGINE::Ref<ENGINE::Texture2D> m_Texture, m_FaceTexture;
 
-	ENGINE::OrthographicCamera m_Camera;
+	ENGINE::OrthographicCameraController m_CameraController;
 	glm::vec3 m_CameraPosition;
 	float m_CameraMoveSpeed = 2.0f;
 	float m_CameraRotation = 0.0f;

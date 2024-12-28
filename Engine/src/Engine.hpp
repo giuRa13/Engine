@@ -22,5 +22,6 @@
 #include "Renderer/OrthographicCamera.hpp"
 #include "Renderer/OpenGL/OpenGLShader.hpp"
 #include "Renderer/Texture.hpp"
+#include "Renderer/OrthoCameraController.hpp"
 
 #include "Entry.hpp"
