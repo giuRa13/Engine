@@ -21,5 +21,6 @@
 #include "Renderer/VertexArray.hpp"
 #include "Renderer/OrthographicCamera.hpp"
 #include "Renderer/OpenGL/OpenGLShader.hpp"
+#include "Renderer/Texture.hpp"
 
 #include "Entry.hpp"

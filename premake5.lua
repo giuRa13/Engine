@@ -9,6 +9,11 @@ workspace "Engine"
         "Dist"
     }
 
+    flags
+	{
+		"MultiProcessorCompile"
+	}
+
 OutputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
@@ -16,6 +21,7 @@ IncludeDir["GLFW"] = "Engine/Vendor/glfw/include"
 IncludeDir["Glad"] = "Engine/Vendor/glad/include"
 IncludeDir["ImGui"] = "Engine/Vendor/imgui"
 IncludeDir["glm"] = "Engine/Vendor/glm"
+IncludeDir["stb_image"] = "Engine/Vendor/stb_image"
 
 include "Engine/Vendor/glfw"
 include "Engine/Vendor/glad"
@@ -39,6 +45,8 @@ project "Engine"
         "Engine/src/**.c",
         "Engine/src/**.hpp",
         "Engine/src/**.cpp",
+        "Engine/Vendor/stb_image/**.h",
+        "Engine/Vendor/stb_image/**.cpp",
         "Engine/Vendor/glm/glm/**.hpp",
 		"Engine/Vendor/glm/glm/**.inl",
     }
@@ -51,6 +59,7 @@ project "Engine"
         "%{IncludeDir.Glad}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.ImGui}",
+        "%{IncludeDir.stb_image}",
     }
 
     links
