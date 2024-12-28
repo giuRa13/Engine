@@ -20,5 +20,6 @@
 #include "Renderer/Shader.hpp"
 #include "Renderer/VertexArray.hpp"
 #include "Renderer/OrthographicCamera.hpp"
+#include "Renderer/OpenGL/OpenGLShader.hpp"
 
 #include "Entry.hpp"
