@@ -44,7 +44,9 @@ void Sandbox2D::OnUpdate(ENGINE::Timestep ts)
 		ENGINE::Renderer2D::DrawQuad({ -0.5f, 0.0f }, { 1.0f, 1.0f }, { 0.8f, 0.2f, 0.3f, 1.0f});
 		ENGINE::Renderer2D::DrawQuad(m_SquarePosition, { 0.5f, 0.75f }, m_SquareColor);
 
-		ENGINE::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerboardTexture);
+		ENGINE::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerboardTexture, 10.0f, { 1.0f, 0.8f, 0.8f, 1.0f });
+
+		//ENGINE::Renderer2D::DrawRotatedQuad({ -1.5f, 1.0f }, { 0.5f, 0.5f }, glm::radians(-45.0f), { 1.0f, 0.6f, 0.3f, 1.0f });
 
 	}
 	ENGINE::Renderer2D::EndScene();
