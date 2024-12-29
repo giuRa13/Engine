@@ -33,8 +33,12 @@ void Sandbox2D::OnUpdate(ENGINE::Timestep ts)
 	else if (ENGINE::Input::IsKeyPressed(ENGINE_KEY_K))
 		m_SquarePosition.y -= m_SquareMoveSpeed * ts;
 
+	static float rotation = 0.0f;
+	rotation += ts * 50.0f;
+
 
 	// Render
+	ENGINE::Renderer2D::ResetStats();
 	ENGINE::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 	ENGINE::RenderCommand::Clear();
 
@@ -43,11 +47,23 @@ void Sandbox2D::OnUpdate(ENGINE::Timestep ts)
 
 		ENGINE::Renderer2D::DrawQuad({ -0.5f, 0.0f }, { 1.0f, 1.0f }, { 0.8f, 0.2f, 0.3f, 1.0f});
 		ENGINE::Renderer2D::DrawQuad(m_SquarePosition, { 0.5f, 0.75f }, m_SquareColor);
+		ENGINE::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.5f }, { 15.0f, 15.0f }, m_CheckerboardTexture, 7.5f, { 1.0f, 0.8f, 0.8f, 1.0f });
+		ENGINE::Renderer2D::DrawRotatedQuad({ -1.5f, 1.0f }, { 0.5f, 0.5f }, rotation, { 1.0f, 0.6f, 0.3f, 1.0f });
+		//ENGINE::Renderer2D::DrawRotatedQuad({ -2.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, -45.0f, m_CheckerboardTexture, 20.0f);
 
-		ENGINE::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, m_CheckerboardTexture, 10.0f, { 1.0f, 0.8f, 0.8f, 1.0f });
+	}
+	ENGINE::Renderer2D::EndScene();
 
-		//ENGINE::Renderer2D::DrawRotatedQuad({ -1.5f, 1.0f }, { 0.5f, 0.5f }, glm::radians(-45.0f), { 1.0f, 0.6f, 0.3f, 1.0f });
-
+	ENGINE::Renderer2D::BeginScene(m_CameraController.GetCamera());
+	{
+		for (float y = -5.0f; y < 5.0f; y += 0.5f)
+		{
+			for (float x = -5.0f; x < 5.0f; x += 0.5f)
+			{
+				glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.5f };
+				ENGINE::Renderer2D::DrawQuad({ x, y, -0.2f }, { 0.45f, 0.45f }, color);
+			}
+		}
 	}
 	ENGINE::Renderer2D::EndScene();
 }
@@ -56,7 +72,16 @@ void Sandbox2D::OnUpdate(ENGINE::Timestep ts)
 void Sandbox2D::OnImGuiRender()
 {
 	ImGui::Begin("Settings");
+
+	auto stats = ENGINE::Renderer2D::GetStats();
+	ImGui::Text("Renderer2D Stats:");
+	ImGui::Text("Draw Calls: %d", stats.DrawCalls);
+	ImGui::Text("Quads: %d", stats.QuadCount);
+	ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
+	ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+
 	ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
+	
 	ImGui::End();
 }
 
