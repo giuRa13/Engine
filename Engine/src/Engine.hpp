@@ -23,4 +23,5 @@
 #include "Renderer/OpenGL/OpenGLShader.hpp"
 #include "Renderer/Texture.hpp"
 #include "Renderer/OrthoCameraController.hpp"
+#include "Renderer/Renderer2D.hpp"
 

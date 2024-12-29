@@ -23,5 +23,8 @@ private:
 	// Temp
 	ENGINE::Ref<ENGINE::VertexArray> m_SquareVA;
 	ENGINE::Ref<ENGINE::Shader> m_FlatColorShader;
+	ENGINE::Ref<ENGINE::Texture2D> m_CheckerboardTexture;
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
+	glm::vec3 m_SquarePosition = { 0.5f, -0.6f, 0.1f};
+	float m_SquareMoveSpeed = 2.0f;
 };
