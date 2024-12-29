@@ -232,6 +232,7 @@ class Sandbox : public ENGINE::Application
 {
 public:
 	Sandbox()
+		:Application("Sandbox")
 	{
 		//PushLayer(new ExampleLayer());
 		PushLayer(new Sandbox2D());

@@ -16,10 +16,10 @@ namespace ENGINE
 	}
 
 
-	Window* Window::Create(const WindowProps& props)
+	/*Window* Window::Create(const WindowProps& props)
 	{
 		return new WindowGLFW(props);
-	}
+	}*/
 
 	WindowGLFW::WindowGLFW(const WindowProps& props)
 	{
@@ -36,7 +36,7 @@ namespace ENGINE
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
-		ENGINE_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
+		ENGINE_CORE_INFO("Creating window [{0}] ({1}, {2})", props.Title, props.Width, props.Height);
 
 		if (!s_GLFWInitialized)
 		{

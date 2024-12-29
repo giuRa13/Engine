@@ -1,6 +1,6 @@
 workspace "Engine"
     architecture "x64"
-    startproject "Sandbox"
+    startproject "Editor"
 
     configurations
     {
@@ -112,6 +112,65 @@ project "Sandbox"
 		"Sandbox/src/**.c",
         "Sandbox/src/**.hpp",
 		"Sandbox/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"Engine/Vendor/spdlog/include",
+		"Engine/src",
+        "Engine/Vendor",
+        "%{IncludeDir.glm}"
+	}
+
+	links
+	{
+		"Engine"
+	}
+
+	filter "system:windows"	
+		systemversion "latest"
+        buildoptions { "/utf-8"}
+
+		defines
+		{
+
+		}
+
+    
+    filter "configurations:Debug"
+		defines "DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "RELEASE"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Dist"
+		defines "DIST"
+		runtime "Release"
+		optimize "on"
+
+
+
+---------------------------------------------------
+project "Editor"
+	location "Editor"
+	kind "ConsoleApp"
+	language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
+
+	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
+	objdir ("bin-int/" .. OutputDir .. "/%{prj.name}")
+
+	files
+	{
+		"Editor/src/**.h",
+		"Editor/src/**.c",
+        "Editor/src/**.hpp",
+		"Editor/src/**.cpp"
 	}
 
 	includedirs
