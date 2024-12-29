@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RendererAPI.hpp"
+#include "../Core.hpp"
 
 
 namespace ENGINE 
@@ -36,7 +37,8 @@ namespace ENGINE
 
 
 	private:
-		static RendererAPI* s_RendererAPI;
+		//static RendererAPI* s_RendererAPI;
+		static Scope<RendererAPI> s_RendererAPI;
 	};
 
 }

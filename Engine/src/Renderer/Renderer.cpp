@@ -4,7 +4,8 @@
 
 namespace ENGINE 
 {
-	Renderer::SceneData* Renderer::m_pSceneData = new Renderer::SceneData;
+	//Renderer::SceneData* Renderer::m_pSceneData = new Renderer::SceneData;
+	Scope<Renderer::SceneData> Renderer::m_pSceneData = CreateScope<Renderer::SceneData>();
 
 
 	void Renderer::Init()

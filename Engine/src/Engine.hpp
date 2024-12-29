@@ -24,4 +24,3 @@
 #include "Renderer/Texture.hpp"
 #include "Renderer/OrthoCameraController.hpp"
 
-#include "Entry.hpp"

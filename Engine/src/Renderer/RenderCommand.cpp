@@ -4,5 +4,6 @@
 
 namespace ENGINE 
 {
-	RendererAPI* RenderCommand::s_RendererAPI = new OpenGLRendererAPI;
+	//RendererAPI* RenderCommand::s_RendererAPI = new OpenGLRendererAPI;
+	Scope<RendererAPI> RenderCommand::s_RendererAPI = CreateScope<OpenGLRendererAPI>();
 }

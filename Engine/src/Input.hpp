@@ -1,7 +1,7 @@
 #pragma once
 
 #include <utility>
-
+#include "Core.hpp"
 
 namespace ENGINE 
 {
@@ -31,7 +31,8 @@ namespace ENGINE
 
 
 	private:
-		static Input* s_Instance;
+		//static Input* s_Instance;
+		static Scope<Input> s_Instance;
 	};
 
 }

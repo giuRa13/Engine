@@ -1,5 +1,7 @@
 #include <Engine.hpp>
 #include <Core.hpp>
+#include "SandboxApp.hpp"
+#include <Entry.hpp>
 #include <memory>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -13,7 +15,7 @@ public:
 		: Layer("Example"), m_CameraController(1280.0f / 720.0f, true), m_SquarePosition(0.0f)
 	{
 		////////////////////////////////////////////////////////////
-		m_VertexArray.reset(ENGINE::VertexArray::Create());
+		m_VertexArray = ENGINE::VertexArray::Create();
 
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f,		0.8f, 0.2f, 0.8f, 1.0f,
@@ -73,7 +75,7 @@ public:
 		m_Shader = ENGINE::Shader::Create("VertexPosColor", vertexSrc, fragmentSrc);
 		////////////////////////////////////////////////////////////
 
-		m_SquareVA.reset(ENGINE::VertexArray::Create());
+		m_SquareVA = ENGINE::VertexArray::Create();
 
 		float squareVertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f,   0.0f, 0.0f,
@@ -183,7 +185,7 @@ public:
 			glm::mat4 squareTransform = glm::translate(glm::mat4(1.0f), m_SquarePosition) * squareScale;
 			ENGINE::Renderer::Submit(m_FlatColorShader, m_SquareVA, squareTransform);
 			
-			//ENGINE::Renderer::Submit(m_Shader, m_VertexArray);
+			ENGINE::Renderer::Submit(m_Shader, m_VertexArray);
 		}
 		ENGINE::Renderer::EndScene();
 	}
@@ -235,6 +237,7 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
+		//PushLayer(new Sandbox2D());
 	}
 
 	~Sandbox()
