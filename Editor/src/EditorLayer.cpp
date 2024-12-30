@@ -29,7 +29,10 @@ namespace ENGINE
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 		m_SquareEntity = square;
 
-		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+		auto redSquare = m_ActiveScene->CreateEntity("Red Square");
+		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
+
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
 		m_CameraEntity.AddComponent<CameraComponent>();
 		m_SecondCamera = m_ActiveScene->CreateEntity("Camera B");
 		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
@@ -169,7 +172,7 @@ namespace ENGINE
 		if (ImGui::Button("Original"))
 			m_ClearColor = { 0.1f, 0.1f, 0.1f, 1 };
 
-		if (m_SquareEntity)
+		/*if (m_SquareEntity)
 		{
 			ImGui::NewLine();
 			ImGui::Separator();
@@ -177,7 +180,7 @@ namespace ENGINE
 			ImGui::Text("%s", tag.c_str());
 			auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
 			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
-		}
+		}*/
 
 		ImGui::NewLine();
 		ImGui::Separator();
@@ -188,23 +191,14 @@ namespace ENGINE
 			m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
 			m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
 		}
-		auto& cameraA = m_CameraEntity.GetComponent<CameraComponent>().Camera;
-		float orthoSize = cameraA.GetOrthographicSize();
-		if (ImGui::DragFloat("Camera A Ortho Size", &orthoSize))
-			cameraA.SetOrthographicSize(orthoSize);
-		auto& cameraB = m_SecondCamera.GetComponent<CameraComponent>().Camera;
-		float orthoSizeB = cameraB.GetOrthographicSize();
-		if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSizeB))
-			cameraB.SetOrthographicSize(orthoSizeB);
-
 
 		ImGui::NewLine();
 		ImGui::Separator();
-		//ImGui::NewLine();
-		//ImGui::InvisibleButton("##space", ImVec2(20, 10));
-		//ImGui::SameLine();
-		//uint32_t texID = m_CheckerboardTexture->GetRendererID();
-		//ImGui::Image((uint32_t)(void*)texID, ImVec2{ 256.0f, 256.0f }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+		ImGui::NewLine();
+		ImGui::InvisibleButton("##space", ImVec2(20, 10));
+		ImGui::SameLine();
+		uint32_t texID = m_CheckerboardTexture->GetRendererID();
+		ImGui::Image((uint32_t)(void*)texID, ImVec2{ 256.0f, 256.0f }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 		ImGui::End();
 
 		// Viewport ////////////////////////////////////////////////

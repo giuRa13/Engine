@@ -21,6 +21,7 @@ namespace ENGINE
 
 	private:
 		void DrawEntityNode(Entity entity);
+		void DrawComponents(Entity entity);
 
 		Ref<Scene> m_SceneContext;
 		Entity m_SelectionContext;
