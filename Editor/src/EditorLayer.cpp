@@ -29,8 +29,18 @@ namespace ENGINE
 
 	void EditorLayer::OnUpdate(ENGINE::Timestep ts)
 	{
-		// Update
-		m_CameraController.OnUpdate(ts);
+		// Resize
+		if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
+			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
+			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
+		{
+			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
+		}
+
+		// Update //////////////////////
+		if (m_ViewportFocused)
+			m_CameraController.OnUpdate(ts);
 
 		if (Input::IsKeyPressed(ENGINE_KEY_J))
 			m_SquarePosition.x -= m_SquareMoveSpeed * ts;
@@ -45,7 +55,7 @@ namespace ENGINE
 		rotation += ts * 50.0f;
 
 
-		// Render
+		// Render /////////////////////
 		Renderer2D::ResetStats();
 
 		m_Framebuffer->Bind();
@@ -152,7 +162,6 @@ namespace ENGINE
 		ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(66, 150, 240, 240));
 		ImGui::Text("Renderer2D Stats:");
 		ImGui::PopStyleColor();
-		ImGui::Text("Renderer2D Stats:");
 		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
@@ -161,9 +170,11 @@ namespace ENGINE
 		ImGui::NewLine();
 		ImGui::Separator();
 		ImGui::ColorEdit4("Clear Color", glm::value_ptr(m_ClearColor));
-		ImGui::SameLine();
 		if (ImGui::Button("Original"))
 			m_ClearColor = { 0.1f, 0.1f, 0.1f, 1 };
+
+		ImGui::NewLine();
+		ImGui::Separator();
 		ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 
 		ImGui::NewLine();
@@ -175,14 +186,12 @@ namespace ENGINE
 		// Viewport ////////////////////////////////////////////////
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		ImGui::Begin("Viewport");
-
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
 		ENGINE::Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
-
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImGui::Image((uint32_t)(void*)textureID, ImVec2{ m_ViewportSize.x,  m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 

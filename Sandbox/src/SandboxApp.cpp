@@ -59,7 +59,7 @@ void Sandbox2D::OnUpdate(ENGINE::Timestep ts)
 	}
 	ENGINE::Renderer2D::EndScene();
 
-	/*ENGINE::Renderer2D::BeginScene(m_CameraController.GetCamera());
+	ENGINE::Renderer2D::BeginScene(m_CameraController.GetCamera());
 	{
 		for (float y = -5.0f; y < 5.0f; y += 0.5f)
 		{
@@ -70,7 +70,7 @@ void Sandbox2D::OnUpdate(ENGINE::Timestep ts)
 			}
 		}
 	}
-	ENGINE::Renderer2D::EndScene();*/
+	ENGINE::Renderer2D::EndScene();
 
 	m_Framebuffer->Unbind();
 }

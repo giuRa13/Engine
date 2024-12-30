@@ -17,11 +17,12 @@ namespace ENGINE
 	{
 	public:
 		Framebuffer(const FramebufferSpecification& spec);
-		~Framebuffer();
+		virtual ~Framebuffer();
 
 		void Invalidate();
 		void Bind();
 		void Unbind();
+		void Resize(uint32_t width, uint32_t height);
 
 		uint32_t GetColorAttachmentRendererID() const { return m_ColorAttachment; }
 		const FramebufferSpecification& GetSpecification() const { return m_Specification; }
