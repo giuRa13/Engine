@@ -30,6 +30,9 @@ namespace ENGINE
 		glm::vec3 m_SquarePosition = { 0.5f, -0.6f, 0.1f };
 		float m_SquareMoveSpeed = 2.0f;
 
+		Ref<Scene> m_ActiveScene;
+		entt::entity m_SquareEntity;
+
 		Ref<Framebuffer> m_Framebuffer;
 		glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
 		bool m_ViewportFocused = false, m_ViewportHovered = false;

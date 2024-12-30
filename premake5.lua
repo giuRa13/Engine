@@ -22,6 +22,7 @@ IncludeDir["Glad"] = "Engine/Vendor/glad/include"
 IncludeDir["ImGui"] = "Engine/Vendor/imgui"
 IncludeDir["glm"] = "Engine/Vendor/glm"
 IncludeDir["stb_image"] = "Engine/Vendor/stb_image"
+IncludeDir["entt"] = "Engine/Vendor/entt/include"
 
 include "Engine/Vendor/glfw"
 include "Engine/Vendor/glad"
@@ -60,6 +61,7 @@ project "Engine"
         "%{IncludeDir.glm}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.stb_image}",
+		"%{IncludeDir.entt}",
     }
 
     links
@@ -119,7 +121,8 @@ project "Sandbox"
 		"Engine/Vendor/spdlog/include",
 		"Engine/src",
         "Engine/Vendor",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+		"%{IncludeDir.entt}",
 	}
 
 	links
@@ -178,7 +181,8 @@ project "Editor"
 		"Engine/Vendor/spdlog/include",
 		"Engine/src",
         "Engine/Vendor",
-        "%{IncludeDir.glm}"
+        "%{IncludeDir.glm}",
+		"%{IncludeDir.entt}",
 	}
 
 	links

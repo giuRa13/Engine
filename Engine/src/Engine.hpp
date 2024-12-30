@@ -26,3 +26,5 @@
 #include "Renderer/Renderer2D.hpp"
 #include "Renderer/Framebuffer.hpp"
 
+#include "Scene/Scene.hpp"
+
