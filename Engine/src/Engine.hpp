@@ -27,4 +27,5 @@
 #include "Renderer/Framebuffer.hpp"
 
 #include "Scene/Scene.hpp"
+#include "Scene/Entity.hpp"
 

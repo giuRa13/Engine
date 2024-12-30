@@ -23,9 +23,11 @@ namespace ENGINE
 		m_Framebuffer = ENGINE::Framebuffer::Create(fbSpec);
 
 		m_ActiveScene = CreateRef<Scene>();
-		auto square = m_ActiveScene->CreateEntity();
-		m_ActiveScene->Reg().emplace<TransformComponent>(square);
-		m_ActiveScene->Reg().emplace<SpriteRendererComponent>(square, glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+
+		// Entity
+		auto square = m_ActiveScene->CreateEntity("Green Square");
+		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+
 		m_SquareEntity = square;
 	}
 
@@ -167,10 +169,15 @@ namespace ENGINE
 		if (ImGui::Button("Original"))
 			m_ClearColor = { 0.1f, 0.1f, 0.1f, 1 };
 
-		ImGui::NewLine();
-		ImGui::Separator();
-		auto& squareColor = m_ActiveScene->Reg().get<SpriteRendererComponent>(m_SquareEntity).Color;
-		ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
+		if (m_SquareEntity)
+		{
+			ImGui::NewLine();
+			ImGui::Separator();
+			auto& tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
+			ImGui::Text("%s", tag.c_str());
+			auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
+			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
+		}
 
 		ImGui::NewLine();
 		ImGui::Separator();
