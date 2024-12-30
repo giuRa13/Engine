@@ -34,6 +34,8 @@ namespace ENGINE
 		m_SecondCamera = m_ActiveScene->CreateEntity("Camera B");
 		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
 		cc.Primary = false;
+
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 	void EditorLayer::OnDetach()
@@ -145,6 +147,8 @@ namespace ENGINE
 
 		if (showDemo)
 			ImGui::ShowDemoWindow(&showDemo);
+
+		m_SceneHierarchyPanel.OnImGuiRender();
 
 
 		//////////////////////////////////////////////

@@ -53,6 +53,8 @@ namespace ENGINE
 
 	void Scene::OnUpdate(Timestep ts)
 	{
+		
+		// Render 2D ////////////////////////////////
 		Camera* mainCamera = nullptr;
 
 		glm::mat4* cameraTransform = nullptr;

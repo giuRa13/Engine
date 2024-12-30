@@ -2,6 +2,7 @@
 
 #include "SceneCamera.hpp"
 #include <glm/glm.hpp>
+#include <memory>
 
 
 namespace ENGINE 

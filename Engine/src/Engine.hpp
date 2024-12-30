@@ -28,4 +28,4 @@
 
 #include "Scene/Scene.hpp"
 #include "Scene/Entity.hpp"
-
+#include "Scene/Panels/SceneHierarchyPanel.hpp"

@@ -35,6 +35,7 @@ namespace ENGINE
 		Entity m_CameraEntity;
 		Entity m_SecondCamera;
 		bool m_PrimaryCamera = true;
+		SceneHierarchyPanel m_SceneHierarchyPanel;
 		
 
 		Ref<Framebuffer> m_Framebuffer;

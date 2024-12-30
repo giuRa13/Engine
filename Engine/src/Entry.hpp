@@ -1,6 +1,7 @@
 #pragma once
 
 #include <windows.h>
+#define NOMINMAX
 
 extern ENGINE::Application* ENGINE::CreateApplication();
 
