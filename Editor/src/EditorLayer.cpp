@@ -172,20 +172,8 @@ namespace ENGINE
 		if (ImGui::Button("Original"))
 			m_ClearColor = { 0.1f, 0.1f, 0.1f, 1 };
 
-		/*if (m_SquareEntity)
-		{
-			ImGui::NewLine();
-			ImGui::Separator();
-			auto& tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
-			ImGui::Text("%s", tag.c_str());
-			auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
-			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
-		}*/
-
 		ImGui::NewLine();
 		ImGui::Separator();
-		ImGui::DragFloat3("Camera Transform",
-			glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
 		if (ImGui::Checkbox("Camera A", &m_PrimaryCamera))
 		{
 			m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
