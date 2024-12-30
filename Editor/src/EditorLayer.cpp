@@ -27,8 +27,13 @@ namespace ENGINE
 		// Entity
 		auto square = m_ActiveScene->CreateEntity("Green Square");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
-
 		m_SquareEntity = square;
+
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+		m_CameraEntity.AddComponent<CameraComponent>();
+		m_SecondCamera = m_ActiveScene->CreateEntity("Camera B");
+		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
+		cc.Primary = false;
 	}
 
 	void EditorLayer::OnDetach()
@@ -44,24 +49,16 @@ namespace ENGINE
 			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
 		{
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-			m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
+			//m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
 		// Update //////////////////////
-		if (m_ViewportFocused)
+		/*if (m_ViewportFocused)
 			m_CameraController.OnUpdate(ts);
 
-		if (Input::IsKeyPressed(ENGINE_KEY_J))
-			m_SquarePosition.x -= m_SquareMoveSpeed * ts;
-		else if (Input::IsKeyPressed(ENGINE_KEY_L))
-			m_SquarePosition.x += m_SquareMoveSpeed * ts;
-		if (Input::IsKeyPressed(ENGINE_KEY_I))
-			m_SquarePosition.y += m_SquareMoveSpeed * ts;
-		else if (Input::IsKeyPressed(ENGINE_KEY_K))
-			m_SquarePosition.y -= m_SquareMoveSpeed * ts;
-
 		static float rotation = 0.0f;
-		rotation += ts * 50.0f;
+		rotation += ts * 50.0f;*/
 
 
 		// Render /////////////////////
@@ -71,16 +68,15 @@ namespace ENGINE
 		RenderCommand::SetClearColor(m_ClearColor);
 		RenderCommand::Clear();
 
-		Renderer2D::BeginScene(m_CameraController.GetCamera());
+		m_ActiveScene->OnUpdate(ts);
+		/*Renderer2D::BeginScene(m_CameraController.GetCamera());
 		{
 			//Renderer2D::DrawQuad({ -0.5f, 0.0f }, { 1.0f, 1.0f }, { 0.8f, 0.2f, 0.3f, 1.0f });
 			//Renderer2D::DrawQuad(m_SquarePosition, { 0.5f, 0.75f }, m_SquareColor);
 			//Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.5f }, { 15.0f, 15.0f }, m_CheckerboardTexture, 7.5f, { 1.0f, 0.8f, 0.8f, 1.0f });
-			//Renderer2D::DrawRotatedQuad({ -1.5f, 1.0f }, { 0.5f, 0.5f }, rotation, { 1.0f, 0.6f, 0.3f, 1.0f });
-
-			m_ActiveScene->OnUpdate(ts);
+			//Renderer2D::DrawRotatedQuad({ -1.5f, 1.0f }, { 0.5f, 0.5f }, rotation, { 1.0f, 0.6f, 0.3f, 1.0f });	
 		}
-		Renderer2D::EndScene();
+		Renderer2D::EndScene();*/
 		m_Framebuffer->Unbind();
 	}
 
@@ -181,8 +177,30 @@ namespace ENGINE
 
 		ImGui::NewLine();
 		ImGui::Separator();
-		uint32_t texID = m_CheckerboardTexture->GetRendererID();
-		ImGui::Image((uint32_t)(void*)texID, ImVec2{ 256.0f, 256.0f }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+		ImGui::DragFloat3("Camera Transform",
+			glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
+		if (ImGui::Checkbox("Camera A", &m_PrimaryCamera))
+		{
+			m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
+			m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
+		}
+		auto& cameraA = m_CameraEntity.GetComponent<CameraComponent>().Camera;
+		float orthoSize = cameraA.GetOrthographicSize();
+		if (ImGui::DragFloat("Camera A Ortho Size", &orthoSize))
+			cameraA.SetOrthographicSize(orthoSize);
+		auto& cameraB = m_SecondCamera.GetComponent<CameraComponent>().Camera;
+		float orthoSizeB = cameraB.GetOrthographicSize();
+		if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSizeB))
+			cameraB.SetOrthographicSize(orthoSizeB);
+
+
+		ImGui::NewLine();
+		ImGui::Separator();
+		//ImGui::NewLine();
+		//ImGui::InvisibleButton("##space", ImVec2(20, 10));
+		//ImGui::SameLine();
+		//uint32_t texID = m_CheckerboardTexture->GetRendererID();
+		//ImGui::Image((uint32_t)(void*)texID, ImVec2{ 256.0f, 256.0f }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 		ImGui::End();
 
 		// Viewport ////////////////////////////////////////////////
