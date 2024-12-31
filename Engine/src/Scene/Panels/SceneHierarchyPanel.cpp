@@ -16,6 +16,7 @@ namespace ENGINE
 	void SceneHierarchyPanel::SetContext(const Ref<Scene>& context)
 	{
 		m_SceneContext = context;
+		m_SelectionContext = {};
 	}
 
 
