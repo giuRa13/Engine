@@ -172,13 +172,13 @@ namespace ENGINE
 		if (ImGui::Button("Original"))
 			m_ClearColor = { 0.1f, 0.1f, 0.1f, 1 };
 
-		ImGui::NewLine();
+		/*ImGui::NewLine();
 		ImGui::Separator();
 		if (ImGui::Checkbox("Camera A", &m_PrimaryCamera))
 		{
 			m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
 			m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
-		}
+		}*/
 
 		ImGui::NewLine();
 		ImGui::Separator();
