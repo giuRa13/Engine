@@ -23,10 +23,12 @@ IncludeDir["ImGui"] = "Engine/Vendor/imgui"
 IncludeDir["glm"] = "Engine/Vendor/glm"
 IncludeDir["stb_image"] = "Engine/Vendor/stb_image"
 IncludeDir["entt"] = "Engine/Vendor/entt/include"
+IncludeDir["yaml_cpp"] = "Engine/Vendor/yaml-cpp/include"
 
 include "Engine/Vendor/glfw"
 include "Engine/Vendor/glad"
 include "Engine/Vendor/imgui"
+include "Engine/Vendor/yaml-cpp"
 
 
 -------------------------------------------------------------------------------
@@ -62,6 +64,7 @@ project "Engine"
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml_cpp}",
     }
 
     links
@@ -69,12 +72,14 @@ project "Engine"
         "GLFW",
         "Glad",
         "ImGui",
+		"yaml-cpp",
         "opengl32.lib"
     }
 
     defines
     {
-        GLFW_INCLUDE_NONE
+        GLFW_INCLUDE_NONE,
+		"YAML_CPP_STATIC_DEFINE"
     }
 
     filter "system:windows"
@@ -194,9 +199,10 @@ project "Editor"
 		systemversion "latest"
         buildoptions { "/utf-8"}
 
+
 		defines
 		{
-
+			"YAML_CPP_STATIC_DEFINE"
 		}
 
     

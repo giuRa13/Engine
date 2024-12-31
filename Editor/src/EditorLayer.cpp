@@ -1,6 +1,7 @@
 #include "EditorLayer.hpp"
 #include <Renderer/OpenGL/OpenGLShader.hpp>
 #include <Scene/Components.hpp>
+#include <Scene/SceneSerializer.hpp>
 #include <imgui/imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -140,6 +141,17 @@ namespace ENGINE
 			if (ImGui::BeginMenu("File"))
 			{
 				if (ImGui::MenuItem("Exit")) ENGINE::Application::Get().Close();
+
+				if (ImGui::MenuItem("Serialize"))
+				{
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Serialize("assets/scenes/Example.engine");
+				}
+				if (ImGui::MenuItem("Deserialize"))
+				{
+					SceneSerializer serializer(m_ActiveScene);
+					serializer.Deserialize("assets/scenes/Example.engine");
+				}
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("Theme"))

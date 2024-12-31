@@ -211,6 +211,14 @@ namespace ENGINE
 	{
 		auto& colors = ImGui::GetStyle().Colors;
 
+		colors[ImGuiCol_TitleBg] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
+		colors[ImGuiCol_TitleBgActive] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
+		colors[ImGuiCol_Tab] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
+		colors[ImGuiCol_TabHovered] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
+		colors[ImGuiCol_TabActive] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
+		colors[ImGuiCol_TabUnfocused] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
+		colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
+
 		colors[ImGuiCol_Text] = ImVec4(0.86f, 0.93f, 0.89f, 0.78f);
 		colors[ImGuiCol_TextDisabled] = ImVec4(0.86f, 0.93f, 0.89f, 0.28f);
 		colors[ImGuiCol_WindowBg] = ImVec4(0.13f, 0.14f, 0.17f, 1.00f);
