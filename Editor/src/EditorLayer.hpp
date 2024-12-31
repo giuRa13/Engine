@@ -49,5 +49,6 @@ namespace ENGINE
 		bool m_ViewportFocused = false, m_ViewportHovered = false;
 		glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1 };
 		bool showDemo = false;
+		int m_GizmoType = -1;
 	};
 }

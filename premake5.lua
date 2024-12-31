@@ -24,6 +24,7 @@ IncludeDir["glm"] = "Engine/Vendor/glm"
 IncludeDir["stb_image"] = "Engine/Vendor/stb_image"
 IncludeDir["entt"] = "Engine/Vendor/entt/include"
 IncludeDir["yaml_cpp"] = "Engine/Vendor/yaml-cpp/include"
+IncludeDir["ImGuizmo"] = "Engine/Vendor/imGuizmo"
 
 include "Engine/Vendor/glfw"
 include "Engine/Vendor/glad"
@@ -52,6 +53,8 @@ project "Engine"
         "Engine/Vendor/stb_image/**.cpp",
         "Engine/Vendor/glm/glm/**.hpp",
 		"Engine/Vendor/glm/glm/**.inl",
+		"Engine/Vendor/imGuizmo/ImGuizmo/ImGuizmo.h",
+		"Engine/Vendor/imGuizmo/ImGuizmo/ImGuizmo.cpp"
     }
 
     includedirs
@@ -65,6 +68,7 @@ project "Engine"
         "%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
+		"%{IncludeDir.ImGuizmo}"
     }
 
     links
@@ -188,6 +192,7 @@ project "Editor"
         "Engine/Vendor",
         "%{IncludeDir.glm}",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links

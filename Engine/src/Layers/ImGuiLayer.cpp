@@ -8,6 +8,7 @@
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
+#include <ImGuizmo/ImGuizmo.h>
 //#include <imgui_impl_opengl3_loader.h>
 
 
@@ -64,6 +65,7 @@ namespace ENGINE
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 	}
 
 	void ImGuiLayer::End()
@@ -112,6 +114,14 @@ namespace ENGINE
 	void ImGuiLayer::SetDefaultTheme()
 	{
 		ImGui::StyleColorsDark();
+		/*auto& style = ImGui::GetStyle();
+		style.TabRounding = 0;
+		style.ScrollbarRounding = 0;
+		style.WindowRounding = 0;
+		style.GrabRounding = 0;
+		style.FrameRounding = 0;
+		style.PopupRounding = 0;
+		style.ChildRounding = 0;*/
 	}
 
 	void ImGuiLayer::SetThemeColors()
@@ -197,23 +207,15 @@ namespace ENGINE
 		colors[ImGuiCol_ResizeGripActive] = ImVec4{ 0.84f, 0.58f, 1.0f, 0.29f };
 		// Docking
 		colors[ImGuiCol_DockingPreview] = ImVec4{0.44f, 0.37f, 0.61f, 1.0f};
-		/*auto& style = ImGui::GetStyle();
-		style.TabRounding = 4;
-		style.ScrollbarRounding = 9;
-		style.WindowRounding = 7;
-		style.GrabRounding = 3;
-		style.FrameRounding = 3;
-		style.PopupRounding = 4;
-		style.ChildRounding = 4;*/
 	}
 
 	void ImGuiLayer::SetTheme3()
 	{
 		auto& colors = ImGui::GetStyle().Colors;
 
-		colors[ImGuiCol_TitleBg] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
-		colors[ImGuiCol_TitleBgActive] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
-		colors[ImGuiCol_Tab] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
+		colors[ImGuiCol_TitleBg] = ImVec4(0.20f, 0.22f, 0.27f, 1.00f); //92f, 0.18f, 0.29f, 1.00f);
+		colors[ImGuiCol_TitleBgActive] = ImVec4(0.20f, 0.22f, 0.27f, 1.00f);
+		colors[ImGuiCol_Tab] = ImVec4(0.20f, 0.22f, 0.27f, 1.00f);//ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
 		colors[ImGuiCol_TabHovered] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
 		colors[ImGuiCol_TabActive] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
 		colors[ImGuiCol_TabUnfocused] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
@@ -229,7 +231,7 @@ namespace ENGINE
 		colors[ImGuiCol_FrameBgActive] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
 		colors[ImGuiCol_TitleBg] = ImVec4(0.20f, 0.22f, 0.27f, 1.00f);//ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
 		colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.20f, 0.22f, 0.27f, 0.75f);
-		colors[ImGuiCol_TitleBgActive] = ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
+		colors[ImGuiCol_TitleBgActive] = ImVec4(0.20f, 0.22f, 0.27f, 1.00f);//ImVec4(0.92f, 0.18f, 0.29f, 1.00f);
 		colors[ImGuiCol_MenuBarBg] = ImVec4(0.20f, 0.22f, 0.27f, 0.47f);
 		colors[ImGuiCol_ScrollbarBg] = ImVec4(0.20f, 0.22f, 0.27f, 1.00f);
 		colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.09f, 0.15f, 0.16f, 1.00f);
