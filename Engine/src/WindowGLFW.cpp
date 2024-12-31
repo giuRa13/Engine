@@ -67,7 +67,7 @@ namespace ENGINE
 		SetVSync(true);
 
 		int width, height, nrChannels;
-		unsigned char* img = stbi_load("assets/textures/cat_violet.png", &width, &height, &nrChannels, 4);
+		unsigned char* img = stbi_load("assets/textures/uim--box.png", &width, &height, &nrChannels, 4);
 		GLFWimage icon = { width,height,img };
 		glfwSetWindowIcon(m_Window, 1, &icon);
 		stbi_image_free(img);

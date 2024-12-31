@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Engine.hpp>
+#include <Renderer/EditorCamera.hpp>
 
 namespace ENGINE
 {
@@ -37,6 +38,7 @@ namespace ENGINE
 		float m_SquareMoveSpeed = 2.0f;
 
 		Ref<Scene> m_ActiveScene;
+		EditorCamera m_EditorCamera;
 		Entity m_SquareEntity;//entt::entity m_SquareEntity;
 		Entity m_CameraEntity;
 		Entity m_SecondCamera;

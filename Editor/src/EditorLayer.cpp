@@ -27,6 +27,7 @@ namespace ENGINE
 		m_Framebuffer = ENGINE::Framebuffer::Create(fbSpec);
 
 		m_ActiveScene = CreateRef<Scene>();
+		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 
 		// Entity
 		auto square = m_ActiveScene->CreateEntity("Green Square");
@@ -60,9 +61,11 @@ namespace ENGINE
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			//m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
 		}
 
 		// Update //////////////////////
+		m_EditorCamera.OnUpdate(ts);
 		/*if (m_ViewportFocused)
 			m_CameraController.OnUpdate(ts);
 
@@ -74,10 +77,11 @@ namespace ENGINE
 		Renderer2D::ResetStats();
 
 		m_Framebuffer->Bind();
+
 		RenderCommand::SetClearColor(m_ClearColor);
 		RenderCommand::Clear();
-
-		m_ActiveScene->OnUpdate(ts);
+		m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+		//m_ActiveScene->OnUpdate(ts);
 		/*Renderer2D::BeginScene(m_CameraController.GetCamera());
 		{
 			//Renderer2D::DrawQuad({ -0.5f, 0.0f }, { 1.0f, 1.0f }, { 0.8f, 0.2f, 0.3f, 1.0f });
@@ -86,12 +90,14 @@ namespace ENGINE
 			//Renderer2D::DrawRotatedQuad({ -1.5f, 1.0f }, { 0.5f, 0.5f }, rotation, { 1.0f, 0.6f, 0.3f, 1.0f });	
 		}
 		Renderer2D::EndScene();*/
+
 		m_Framebuffer->Unbind();
 	}
 
 	void EditorLayer::OnEvent(Event& e)
 	{
-		m_CameraController.OnEvent(e);
+		//m_CameraController.OnEvent(e);
+		m_EditorCamera.OnEvent(e);
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(ENGINE_BIND_EVENT_FUNC(EditorLayer::OnKeyPressed));
@@ -102,6 +108,7 @@ namespace ENGINE
 		// Shortcuts
 		if (e.GetRepeatCount() > 0)
 			return false;
+
 		bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
 		switch (e.GetKeyCode())
 		{
@@ -124,17 +131,13 @@ namespace ENGINE
 				break;
 			}
 			// ImGuizmo
-			case Key::Q:
-				m_GizmoType = -1;
+			case Key::Q:m_GizmoType = -1;
 				break;
-			case Key::W:
-				m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+			case Key::W:m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
 				break;
-			case Key::E:
-				m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+			case Key::E:m_GizmoType = ImGuizmo::OPERATION::ROTATE;
 				break;
-			case Key::R:
-				m_GizmoType = ImGuizmo::OPERATION::SCALE;
+			case Key::R:m_GizmoType = ImGuizmo::OPERATION::SCALE;
 				break;
 		}
 	}
@@ -278,14 +281,6 @@ namespace ENGINE
 		if (ImGui::Button("Original"))
 			m_ClearColor = { 0.1f, 0.1f, 0.1f, 1 };
 
-		/*ImGui::NewLine();
-		ImGui::Separator();
-		if (ImGui::Checkbox("Camera A", &m_PrimaryCamera))
-		{
-			m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
-			m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
-		}*/
-
 		ImGui::NewLine();
 		ImGui::Separator();
 		ImGui::NewLine();
@@ -317,11 +312,15 @@ namespace ENGINE
 			float windowHeight = (float)ImGui::GetWindowHeight();
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
 
-			// Camera
-			auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+			// Runtime Camera entity
+			/*auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
 			const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
 			const glm::mat4& cameraProjection = camera.GetProjection();
-			glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+			glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());*/
+
+			// Editor Camera
+			const glm::mat4& cameraProjection = m_EditorCamera.GetProjection();
+			glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();
 			// Entity transform
 			auto& tc = selectedEntity.GetComponent<TransformComponent>();
 			glm::mat4 transform = tc.GetTransform();

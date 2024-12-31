@@ -2,6 +2,7 @@
 
 #include "OrthographicCamera.hpp"
 #include "Camera.hpp"
+#include "EditorCamera.hpp"
 #include "Texture.hpp"
 
 
@@ -16,6 +17,7 @@ namespace ENGINE
 
 		static void BeginScene(const Camera& camera, const glm::mat4& transform);
 		static void BeginScene(const OrthographicCamera& camera);
+		static void BeginScene(const EditorCamera& camera);
 		static void EndScene();
 		static void Flush();
 
@@ -47,7 +49,8 @@ namespace ENGINE
 
 
 	private:
-		static void FlushAndReset();
+		static void StartBatch();
+		static void NextBatch();
 	};
 
 }
