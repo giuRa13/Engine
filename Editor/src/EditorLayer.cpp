@@ -29,8 +29,8 @@ namespace ENGINE
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 		m_SquareEntity = square;
 
-		auto redSquare = m_ActiveScene->CreateEntity("Red Square");
-		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
+		auto redSquare = m_ActiveScene->CreateEntity("Purlpe Square");
+		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 1.0f, 1.0f });
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
 		m_CameraEntity.AddComponent<CameraComponent>();
@@ -125,16 +125,34 @@ namespace ENGINE
 
 		// DockSpace ////////////////////////////////////
 		ImGuiIO& io = ImGui::GetIO();
+		ImGuiStyle& style = ImGui::GetStyle();
+		float minWinSize = style.WindowMinSize.x;
+		style.WindowMinSize.x = 370.0f; // if is a docking window
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 		}
+		style.WindowMinSize.x = minWinSize; // set back to default
+
 		if (ImGui::BeginMenuBar())
 		{
 			if (ImGui::BeginMenu("File"))
 			{
 				if (ImGui::MenuItem("Exit")) ENGINE::Application::Get().Close();
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Theme"))
+			{
+				auto imGuiLayer = Application::Get().GetImGuiLayer();
+				if (ImGui::MenuItem("Theme 1"))
+				{
+					imGuiLayer->SetDefaultTheme();
+					imGuiLayer->SetThemeColors();
+				}
+				if (ImGui::MenuItem("Theme 2")) imGuiLayer->SetTheme2();
+				if (ImGui::MenuItem("Theme 3")) imGuiLayer->SetTheme3();
+				if (ImGui::MenuItem("Default")) imGuiLayer->SetDefaultTheme();
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("Demo"))
