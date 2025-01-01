@@ -22,6 +22,7 @@ namespace ENGINE
 
 	private:
 		bool OnKeyPressed(KeyPressedEvent& e);
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
 		void NewScene();
 		void OpenScene();
 		void SaveSceneAs();
@@ -44,6 +45,7 @@ namespace ENGINE
 		Entity m_SecondCamera;
 		bool m_PrimaryCamera = true;
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		Entity m_HoveredEntity;
 		
 
 		Ref<Framebuffer> m_Framebuffer;

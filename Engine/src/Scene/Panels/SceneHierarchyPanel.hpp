@@ -19,6 +19,7 @@ namespace ENGINE
 		void OnImGuiRender();
 
 		Entity GetSelectedEntity() const { return m_SelectionContext; }
+		void SetSelectedEntity(Entity entity);
 
 
 	private:

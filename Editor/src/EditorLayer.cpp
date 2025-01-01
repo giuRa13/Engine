@@ -96,12 +96,16 @@ namespace ENGINE
 		if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 		{
 			int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-			ENGINE_CORE_WARN("Pixel data = {0}", pixelData);
+			//ENGINE_CORE_WARN("Pixel data = {0}", pixelData);
+			//ENGINE_CORE_WARN("X:{}, Y:{}", mouseX, mouseY);
+			m_HoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, m_ActiveScene.get());
 		}
 
 		m_Framebuffer->Unbind();
 	}
 
+
+	// Events /////////////////////////////
 	void EditorLayer::OnEvent(Event& e)
 	{
 		//m_CameraController.OnEvent(e);
@@ -109,6 +113,21 @@ namespace ENGINE
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(ENGINE_BIND_EVENT_FUNC(EditorLayer::OnKeyPressed));
+		dispatcher.Dispatch<MouseButtonPressedEvent>(ENGINE_BIND_EVENT_FUNC(EditorLayer::OnMouseButtonPressed));
+	}
+
+	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+	{
+		if (e.GetMouseButton() == Mouse::ButtonLeft)
+		{
+			if (m_ViewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt))
+			{
+				m_SceneHierarchyPanel.SetSelectedEntity(m_HoveredEntity);
+				m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+			}
+				
+		}
+		return false;
 	}
 
 	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
@@ -166,6 +185,7 @@ namespace ENGINE
 			}
 		}
 	}
+	// Events /////////////////////////////
 
 	void EditorLayer::NewScene()
 	{
@@ -245,7 +265,7 @@ namespace ENGINE
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("Exit")) ENGINE::Application::Get().Close();
+				if (ImGui::MenuItem("Exit", "Esc")) ENGINE::Application::Get().Close();
 
 				if (ImGui::MenuItem("New", "Ctrl+N"))
 					NewScene();
@@ -299,6 +319,10 @@ namespace ENGINE
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+		std::string name = "None";
+		if (m_HoveredEntity)
+			name = m_HoveredEntity.GetComponent<TagComponent>().Tag;
+		ImGui::Text("Hovered Entity: %s", name.c_str());
 
 		ImGui::NewLine();
 		ImGui::Separator();
@@ -329,6 +353,7 @@ namespace ENGINE
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImGui::Image((uint32_t)(void*)textureID, ImVec2{ m_ViewportSize.x,  m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 

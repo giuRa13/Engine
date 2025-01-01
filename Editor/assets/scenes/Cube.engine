@@ -2,6 +2,33 @@ Scene: Untitled
 Entities:
   - Entity: 12837192831273
     TagComponent:
+      Tag: Top
+    TransformComponent:
+      Translation: [-0.3502259, -0.060601853, -0.2798152]
+      Rotation: [-1.5555012, -0.67695713, -0.01966765]
+      Scale: [1, 0.9999014, 0.9997761]
+    SpriteRendererComponent:
+      Color: [0.8647219, 0.6133853, 0.8888889, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Right
+    TransformComponent:
+      Translation: [0.039464727, -0.56902057, 0.03239634]
+      Rotation: [0.008665004, 0.8941485, 0.0056656054]
+      Scale: [1.0000347, 0.9998425, 1]
+    SpriteRendererComponent:
+      Color: [0.50069803, 0.2957491, 0.5497076, 1]
+  - Entity: 12837192831273
+    TagComponent:
+      Tag: Left
+    TransformComponent:
+      Translation: [-0.66674316, -0.56241685, 0.10570833]
+      Rotation: [0.014229791, -0.67829704, -0.01515246]
+      Scale: [0.9999501, 0.9998666, 0.9999929]
+    SpriteRendererComponent:
+      Color: [0.79410666, 0.47737765, 0.8245614, 1]
+  - Entity: 12837192831273
+    TagComponent:
       Tag: Camera
     TransformComponent:
       Translation: [0.3, 1.9, 3.8]
@@ -18,30 +45,3 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Left
-    TransformComponent:
-      Translation: [-0.66793823, -0.56242585, 0.1071917]
-      Rotation: [0.014230549, -0.6783294, -0.015153322]
-      Scale: [0.9999757, 0.9998666, 0.99999636]
-    SpriteRendererComponent:
-      Color: [0.79410666, 0.47737765, 0.8245614, 1]
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Right
-    TransformComponent:
-      Translation: [0.044109076, -0.5688769, 0.03702903]
-      Rotation: [0.0068505676, 0.89314663, 0.007946325]
-      Scale: [1.0000077, 0.9999309, 1.0000015]
-    SpriteRendererComponent:
-      Color: [0.50069803, 0.2957491, 0.5497076, 1]
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Top
-    TransformComponent:
-      Translation: [-0.34991565, -0.06060037, -0.28020102]
-      Rotation: [-1.5555012, -0.67695713, -0.01966765]
-      Scale: [1, 0.9999014, 0.9998053]
-    SpriteRendererComponent:
-      Color: [0.8647219, 0.6133853, 0.8888889, 1]
