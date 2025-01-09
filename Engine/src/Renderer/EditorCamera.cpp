@@ -3,7 +3,9 @@
 #include "../Events/KeyCode.hpp"
 #include "../Events/MouseCode.hpp"
 #include <glfw/glfw3.h>
+#define GLM_FORCE_QUAT_DATA_WXYZ
 #define GLM_ENABLE_EXPERIMENTAL
+//#define GLM_FORCE_QUAT_DATA_XYZW 
 #include <glm/gtx/quaternion.hpp>
 
 

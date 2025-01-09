@@ -9,8 +9,8 @@ namespace ENGINE
 	class Editor : public Application
 	{
 	public:
-		Editor()
-			: Application("Engine Editor")
+		Editor(ApplicationCommandLineArgs args)
+			: Application("Editor", args)
 		{
 			PushLayer(new EditorLayer());
 		}
@@ -19,8 +19,9 @@ namespace ENGINE
 		}
 	};
 	
-	Application* CreateApplication()
+	Application* CreateApplication(ApplicationCommandLineArgs args)
 	{
-		return new Editor();
+		return new Editor(args);
 	}
+
 }

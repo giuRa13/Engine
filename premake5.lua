@@ -15,6 +15,7 @@ workspace "Engine"
 	}
 
 OutputDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+VULKAN_SDK = os.getenv("VULKAN_SDK")
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "Engine/Vendor/glfw/include"
@@ -25,11 +26,28 @@ IncludeDir["stb_image"] = "Engine/Vendor/stb_image"
 IncludeDir["entt"] = "Engine/Vendor/entt/include"
 IncludeDir["yaml_cpp"] = "Engine/Vendor/yaml-cpp/include"
 IncludeDir["ImGuizmo"] = "Engine/Vendor/imGuizmo"
+IncludeDir["shaderc"] = "Engine/Vendor/shaderc/include"
+IncludeDir["SPIRVCross"] = "Engine/Vendor/SPIRV-Cross/include"
+IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
+
+LibraryDir = {}
+LibraryDir["VulkanSDK"] = "%{VULKAN_SDK}/Lib"
+
+Library = {}
+Library["Vulkan"] = "%{LibraryDir.VulkanSDK}/vulkan-1.lib"
+Library["ShaderC_Debug"] = "%{LibraryDir.VulkanSDK}/shaderc_sharedd.lib"
+--Library["SPIRV_Cross_Debug"] = "%{LibraryDir.VulkanSDK}/spirv-cross-cored.lib"
+--Library["SPIRV_Cross_GLSL_Debug"] = "%{LibraryDir.VulkanSDK}/spirv-cross-glsld.lib"
+--Library["SPIRV_Tools_Debug"] = "%{LibraryDir.VulkanSDK}/SPIRV-Toolsd.lib"
+--Library["ShaderC_Release"] = "%{LibraryDir.VulkanSDK}/shaderc_shared.lib"
+--Library["SPIRV_Cross_Release"] = "%{LibraryDir.VulkanSDK}/spirv-cross-core.lib"
+--Library["SPIRV_Cross_GLSL_Release"] = "%{LibraryDir.VulkanSDK}/spirv-cross-glsl.lib"
 
 include "Engine/Vendor/glfw"
 include "Engine/Vendor/glad"
 include "Engine/Vendor/imgui"
 include "Engine/Vendor/yaml-cpp"
+include "Engine/Vendor/SPIRV-Cross"
 
 
 -------------------------------------------------------------------------------
@@ -68,7 +86,9 @@ project "Engine"
         "%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
-		"%{IncludeDir.ImGuizmo}"
+		"%{IncludeDir.ImGuizmo}",
+		"%{IncludeDir.VulkanSDK}",
+		"%{IncludeDir.SPIRVCross}"
     }
 
     links
@@ -77,13 +97,15 @@ project "Engine"
         "Glad",
         "ImGui",
 		"yaml-cpp",
+		"SPIRVCross",
         "opengl32.lib"
     }
 
     defines
     {
-        GLFW_INCLUDE_NONE,
-		"YAML_CPP_STATIC_DEFINE"
+        --"GLFW_INCLUDE_NONE",
+		"YAML_CPP_STATIC_DEFINE",
+		"VK_USE_PLATFORM_WIN32_KHR",
     }
 
     filter "system:windows"
@@ -91,23 +113,35 @@ project "Engine"
         buildoptions { "/utf-8"}
     
     filter "configurations:Debug"
-		defines "HZ_DEBUG"
+		defines "DEBUG"
 		runtime "Debug"
 		symbols "on"
+		links
+		{
+			"%{Library.ShaderC_Debug}",
+			--"%{Library.SPIRV_Cross_Debug}",
+			--"%{Library.SPIRV_Cross_GLSL_Debug}"
+		}
 
 	filter "configurations:Release"
-		defines "HZ_RELEASE"
+		defines "RELEASE"
 		runtime "Release"
 		optimize "on"
+		--[[links
+		{
+			"%{Library.ShaderC_Release}",
+			"%{Library.SPIRV_Cross_Release}",
+			"%{Library.SPIRV_Cross_GLSL_Release}"
+		}]]--
 
 	filter "configurations:Dist"
-		defines "HZ_DIST"
+		defines "DIST"
 		runtime "Release"
 		optimize "on"
 
 
 ---------------------------------------------------
-project "Sandbox"
+--[[project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
@@ -162,7 +196,7 @@ project "Sandbox"
 	filter "configurations:Dist"
 		defines "DIST"
 		runtime "Release"
-		optimize "on"
+		optimize "on"]]--
 
 
 

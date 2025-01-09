@@ -10,11 +10,21 @@
 
 namespace ENGINE 
 {
+	struct ApplicationCommandLineArgs
+	{
+		int Count = 0;
+		char** Args = nullptr;
+		const char* operator[](int index) const
+		{
+			//ENGINE_CORE_ASSERT(index < Count);
+			return Args[index];
+		}
+	};
 
 	class Application
 	{
 	public:
-		Application(const std::string& name = "Engine App");
+		Application(const std::string& name = "Engine App", ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
 		virtual ~Application() = default;
 
 		void Run();
@@ -27,12 +37,14 @@ namespace ENGINE
 		inline Window& GetWindow() { return *m_Window; }
 		inline static Application& Get() { return *s_Instance; }
 		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
+		ApplicationCommandLineArgs GetCommandLineArgs() const { return m_CommandLineArgs; }
 
 
 	private:
 		bool OnWindowClose(WindowClosedEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
+		ApplicationCommandLineArgs m_CommandLineArgs;
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
@@ -45,6 +57,6 @@ namespace ENGINE
 	};
 
 	// To be defined in CLIENT
-	Application* CreateApplication();
+	Application* CreateApplication(ApplicationCommandLineArgs args);
 
 }
