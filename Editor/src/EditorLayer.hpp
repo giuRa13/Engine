@@ -2,6 +2,7 @@
 
 #include <Engine.hpp>
 #include <Renderer/EditorCamera.hpp>
+#include <filesystem>
 
 namespace ENGINE
 {
@@ -25,6 +26,7 @@ namespace ENGINE
 		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
 		void NewScene();
 		void OpenScene();
+		void OpenScene(const std::filesystem::path& path);
 		void SaveSceneAs();
 
 	private:
@@ -45,6 +47,7 @@ namespace ENGINE
 		Entity m_SecondCamera;
 		bool m_PrimaryCamera = true;
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+		ContentBrowserPanel m_ContentBrowserPanel;
 		Entity m_HoveredEntity;
 		
 
