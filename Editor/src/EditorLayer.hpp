@@ -28,14 +28,18 @@ namespace ENGINE
 		void OpenScene();
 		void OpenScene(const std::filesystem::path& path);
 		void SaveSceneAs();
+		void OnScenePlay();
+		void OnSceneStop();
+		void UI_Toolbar();
 
 	private:
 		OrthographicCameraController m_CameraController;
 
 		// Temp
-		Ref<ENGINE::VertexArray> m_SquareVA;
-		Ref<ENGINE::Shader> m_FlatColorShader;
-		Ref<ENGINE::Texture2D> m_CheckerboardTexture;
+		//Ref<VertexArray> m_SquareVA;
+		//Ref<Shader> m_FlatColorShader;
+		Ref<Texture2D> m_CheckerboardTexture;
+		Ref<Texture2D> m_IconPlay, m_IconStop;
 		glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 		glm::vec3 m_SquarePosition = { 0.5f, -0.6f, 0.1f };
 		float m_SquareMoveSpeed = 2.0f;
@@ -58,5 +62,11 @@ namespace ENGINE
 		glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1 };
 		bool showDemo = false;
 		int m_GizmoType = -1;
+
+		enum class SceneState
+		{
+			Edit = 0, Play = 1
+		};
+		SceneState m_SceneState = SceneState::Edit;
 	};
 }

@@ -66,6 +66,7 @@ namespace ENGINE
 		}
 
 		ImGui::Columns(1);
+		ImGui::NewLine();
 		ImGui::SliderFloat("Thumbnail Size", &thumbnailSize, 16, 512);
 		ImGui::SliderFloat("Padding", &padding, 0, 32);
 		// TODO: status bar
