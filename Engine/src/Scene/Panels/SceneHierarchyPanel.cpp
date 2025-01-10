@@ -36,31 +36,36 @@ namespace ENGINE
 	void SceneHierarchyPanel::OnImGuiRender()
 	{
 		ImGui::Begin("Scene Hierarchy");
-		m_SceneContext->m_Registry.view<entt::entity>().each([&](auto entityID)//m_Context->m_Registry.each([&](auto entityID) {});
-			{
-				Entity entity{ entityID , m_SceneContext.get() };
-				DrawEntityNode(entity);
-			});
-
-		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-			m_SelectionContext = {};
-
-		ImGui::NewLine();
-		if (ImGui::Button("New Entity"))
-			m_SceneContext->CreateEntity("Empty Entity");
-
-		// Right-click on blank space
-		if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
+		if (m_SceneContext)
 		{
-			if (ImGui::MenuItem("Create Empty Entity"))
+			m_SceneContext->m_Registry.view<entt::entity>().each([&](auto entityID)//m_Context->m_Registry.each([&](auto entityID) {});
+				{
+					Entity entity{ entityID , m_SceneContext.get() };
+					DrawEntityNode(entity);
+				});
+
+			if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+				m_SelectionContext = {};
+
+			ImGui::NewLine();
+			if (ImGui::Button("New Entity"))
 				m_SceneContext->CreateEntity("Empty Entity");
-			ImGui::EndPopup();
+
+			// Right-click on blank space
+			if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
+			{
+				if (ImGui::MenuItem("Create Empty Entity"))
+					m_SceneContext->CreateEntity("Empty Entity");
+				ImGui::EndPopup();
+			}
 		}
 		ImGui::End();
 
 		ImGui::Begin("Properties");
+
 		if (m_SelectionContext)
 			DrawComponents(m_SelectionContext);
+
 		ImGui::End();
 	}
 
@@ -378,7 +383,7 @@ namespace ENGINE
 		DrawComponent<BoxCollider2DComponent>("Box Collider 2D", entity, [](auto& component)
 		{
 			ImGui::DragFloat2("Offset", glm::value_ptr(component.Offset));
-			ImGui::DragFloat2("Size", glm::value_ptr(component.Offset));
+			ImGui::DragFloat2("Size", glm::value_ptr(component.Size));
 			ImGui::DragFloat("Density", &component.Density, 0.01f, 0.0f, 1.0f);
 			ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
 			ImGui::DragFloat("Restitution", &component.Restitution, 0.01f, 0.0f, 1.0f);

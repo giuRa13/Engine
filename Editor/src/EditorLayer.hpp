@@ -27,9 +27,13 @@ namespace ENGINE
 		void NewScene();
 		void OpenScene();
 		void OpenScene(const std::filesystem::path& path);
+		void SaveScene();
 		void SaveSceneAs();
+		void SerializeScene(Ref<Scene> scene, const std::filesystem::path& path);
 		void OnScenePlay();
 		void OnSceneStop();
+		void OnDuplicateEntity();
+
 		void UI_Toolbar();
 
 	private:
@@ -45,6 +49,8 @@ namespace ENGINE
 		float m_SquareMoveSpeed = 2.0f;
 
 		Ref<Scene> m_ActiveScene;
+		Ref<Scene> m_EditorScene;
+		std::filesystem::path m_EditorScenePath;
 		EditorCamera m_EditorCamera;
 		Entity m_SquareEntity;//entt::entity m_SquareEntity;
 		Entity m_CameraEntity;

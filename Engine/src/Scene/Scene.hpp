@@ -19,6 +19,8 @@ namespace ENGINE
 		Scene();
 		~Scene();
 
+		static Ref<Scene> Copy(Ref<Scene> other);
+
 		Entity CreateEntity(const std::string& name = std::string());
 		Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
@@ -31,8 +33,8 @@ namespace ENGINE
 		void OnViewportResize(uint32_t width, uint32_t height);
 
 		Entity GetPrimaryCameraEntity();
-		// TEMP
-		//entt::registry& Reg() { return m_Registry; }
+		
+		void DuplicateEntity(Entity entity);
 
 
 	private:
