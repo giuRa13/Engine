@@ -26,6 +26,7 @@ IncludeDir["stb_image"] = "Engine/Vendor/stb_image"
 IncludeDir["entt"] = "Engine/Vendor/entt/include"
 IncludeDir["yaml_cpp"] = "Engine/Vendor/yaml-cpp/include"
 IncludeDir["ImGuizmo"] = "Engine/Vendor/imGuizmo"
+IncludeDir["Box2D"] = "Engine/Vendor/Box2D/include"
 IncludeDir["shaderc"] = "Engine/Vendor/shaderc/include"
 IncludeDir["SPIRVCross"] = "Engine/Vendor/SPIRV-Cross/include"
 IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
@@ -47,6 +48,7 @@ include "Engine/Vendor/glfw"
 include "Engine/Vendor/glad"
 include "Engine/Vendor/imgui"
 include "Engine/Vendor/yaml-cpp"
+include "Engine/Vendor/Box2D"
 include "Engine/Vendor/SPIRV-Cross"
 
 
@@ -87,6 +89,7 @@ project "Engine"
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.ImGuizmo}",
+		"%{IncludeDir.Box2D}",
 		"%{IncludeDir.VulkanSDK}",
 		"%{IncludeDir.SPIRVCross}"
     }
@@ -97,6 +100,7 @@ project "Engine"
         "Glad",
         "ImGui",
 		"yaml-cpp",
+		"Box2D",
 		"SPIRVCross",
         "opengl32.lib"
     }

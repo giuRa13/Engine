@@ -5,6 +5,8 @@
 #include <Renderer/EditorCamera.hpp>
 
 
+class b2World;
+
 namespace ENGINE
 {
 	class Entity;
@@ -18,6 +20,9 @@ namespace ENGINE
 
 		Entity CreateEntity(const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
+
+		void OnRuntimeStart();
+		void OnRuntimeStop();
 
 		void OnUpdateRuntime(Timestep ts);
 		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
@@ -34,6 +39,8 @@ namespace ENGINE
 
 		entt::registry m_Registry;
 		uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
+
+		b2World* m_PhysicsWorld = nullptr;
 
 		friend class Entity;
 		friend class SceneHierarchyPanel;
