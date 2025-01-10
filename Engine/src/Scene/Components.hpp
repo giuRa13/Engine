@@ -2,6 +2,7 @@
 
 #include "SceneCamera.hpp"
 #include "../Renderer/Texture.hpp"
+#include "../UUID.hpp"
 #include <memory>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -11,6 +12,13 @@
 
 namespace ENGINE 
 {
+	struct IDComponent
+	{
+		UUID ID;
+
+		IDComponent() = default;
+		IDComponent(const IDComponent&) = default;
+	};
 
 	struct TagComponent
 	{
