@@ -145,7 +145,7 @@ project "Engine"
 
 
 ---------------------------------------------------
---[[project "Sandbox"
+project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
@@ -200,7 +200,7 @@ project "Engine"
 	filter "configurations:Dist"
 		defines "DIST"
 		runtime "Release"
-		optimize "on"]]--
+		optimize "on"
 
 
 

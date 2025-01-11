@@ -21,10 +21,18 @@ namespace ENGINE
 		}
 	};
 
+	struct ApplicationSpecification
+	{
+		std::string Name = "Engine Application";
+		std::string WorkingDirectory;
+		ApplicationCommandLineArgs CommandLineArgs;
+	};
+
+
 	class Application
 	{
 	public:
-		Application(const std::string& name = "Engine App", ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
+		Application(const ApplicationSpecification& specification);
 		virtual ~Application() = default;
 
 		void Run();
@@ -37,14 +45,14 @@ namespace ENGINE
 		inline Window& GetWindow() { return *m_Window; }
 		inline static Application& Get() { return *s_Instance; }
 		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
-		ApplicationCommandLineArgs GetCommandLineArgs() const { return m_CommandLineArgs; }
+		const ApplicationSpecification& GetSpecification() const { return m_Specification; }
 
 
 	private:
 		bool OnWindowClose(WindowClosedEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
-		ApplicationCommandLineArgs m_CommandLineArgs;
+		ApplicationSpecification m_Specification;
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;

@@ -228,7 +228,7 @@ private:
 
 
 
-class Sandbox : public ENGINE::Application
+/*class Sandbox : public ENGINE::Application
 {
 public:
 	Sandbox()
@@ -247,4 +247,29 @@ public:
 ENGINE::Application* ENGINE::CreateApplication()
 {
 	return new Sandbox();
+}*/
+
+
+class Sandbox : public ENGINE::Application
+{
+public:
+	Sandbox(const ENGINE::ApplicationSpecification& specification)
+		: ENGINE::Application(specification)
+	{
+		// PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
+	}
+
+	~Sandbox()
+	{
+	}
+};
+
+ENGINE::Application* ENGINE::CreateApplication(ENGINE::ApplicationCommandLineArgs args)
+{
+	ApplicationSpecification spec;
+	spec.Name = "Sandbox";
+	spec.WorkingDirectory = "../Editor";
+	spec.CommandLineArgs = args;
+	return new Sandbox(spec);
 }

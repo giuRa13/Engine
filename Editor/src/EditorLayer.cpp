@@ -25,7 +25,7 @@ namespace ENGINE
 		m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
 		m_IconPlay = Texture2D::Create("assets/editor/play-circle32.png");
 		m_IconStop = Texture2D::Create("assets/editor/stop-circle32.png");
-		m_IconSimulate = Texture2D::Create("assets/editor/science32.png");
+		m_IconSimulate = Texture2D::Create("assets/editor/scatter-plot.png");
 
 		ENGINE::FramebufferSpecification fbSpec;
 		fbSpec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
@@ -37,7 +37,7 @@ namespace ENGINE
 		m_EditorScene = CreateRef<Scene>();
 		m_ActiveScene = m_EditorScene;
 
-		auto commandLineArgs = Application::Get().GetCommandLineArgs();
+		auto commandLineArgs = Application::Get().GetSpecification().CommandLineArgs;
 		if (commandLineArgs.Count > 1)
 		{
 			auto sceneFilePath = commandLineArgs[1];
@@ -45,6 +45,8 @@ namespace ENGINE
 			serializer.Deserialize(sceneFilePath);
 		}
 		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
+
+		Renderer2D::SetLineWidth(4.0f);
 
 #if 0
 		// Entity
@@ -149,7 +151,10 @@ namespace ENGINE
 	void EditorLayer::OnEvent(Event& e)
 	{
 		//m_CameraController.OnEvent(e);
-		m_EditorCamera.OnEvent(e);
+		if (m_SceneState == SceneState::Edit)
+		{
+			m_EditorCamera.OnEvent(e);
+		}
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(ENGINE_BIND_EVENT_FUNC(EditorLayer::OnKeyPressed));
@@ -173,7 +178,7 @@ namespace ENGINE
 	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
 	{
 		// Shortcuts
-		if (e.GetRepeatCount() > 0)
+		if (e.IsRepeat())
 			return false;
 
 		bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
@@ -346,6 +351,14 @@ namespace ENGINE
 				}
 			}
 		}
+
+		// Draw selected entity outline 
+		if (Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity()) {
+			TransformComponent transform = selectedEntity.GetComponent<TransformComponent>();
+
+			Renderer2D::DrawRect(transform.GetTransform(), glm::vec4(1, 0, 0, 1));
+		}
+
 		Renderer2D::EndScene();
 	}
 
@@ -608,7 +621,7 @@ namespace ENGINE
 				Ref<Texture2D> icon = (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Play) ? m_IconSimulate : m_IconStop;		//ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
 				if (ImGui::ImageButton("##y", (ImTextureID)icon->GetRendererID(), 
 					ImVec2((float)icon->GetWidth(), (float)icon->GetHeight()),
-					ImVec2(0, 0), ImVec2(1, 1), ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
+					ImVec2(0, 1), ImVec2(1, 0), ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
 				{
 					if (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Play)
 						OnSceneSimulate();
