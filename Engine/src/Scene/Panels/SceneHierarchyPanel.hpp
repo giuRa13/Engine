@@ -4,6 +4,8 @@
 #include <Log.hpp>
 #include "../Scene.hpp"
 #include "../Entity.hpp"
+#include "../../Renderer/Texture.hpp"
+
 
 
 namespace ENGINE 
@@ -28,7 +30,6 @@ namespace ENGINE
 
 		Ref<Scene> m_SceneContext;
 		Entity m_SelectionContext;
-
 	};
 
 }

@@ -24,6 +24,8 @@ namespace ENGINE
 	private:
 		bool OnKeyPressed(KeyPressedEvent& e);
 		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+		void OnOverlayRender();
+
 		void NewScene();
 		void OpenScene();
 		void OpenScene(const std::filesystem::path& path);
@@ -68,6 +70,7 @@ namespace ENGINE
 		glm::vec4 m_ClearColor = { 0.1f, 0.1f, 0.1f, 1 };
 		bool showDemo = false;
 		int m_GizmoType = -1;
+		bool m_ShowPhysicsColliders = false;
 
 		enum class SceneState
 		{
