@@ -34,14 +34,12 @@ IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
 
 LibraryDir = {}
 LibraryDir["VulkanSDK"] = "%{VULKAN_SDK}/Lib"
---LibraryDir["Mono_Debug"] = "%{wks.location}/Engine/Vendor/mono/lib/Debug"
---LibraryDir["Mono_Release"] = "%{wks.location}/Engine/Vendor/mono/lib/Release"
+LibraryDir["Mono"] = "%{wks.location}/Engine/Vendor/mono/lib/%{cfg.buildcfg}"
 --LibraryDir["mono"] = "Engine/Vendor/mono/lib/Debug/mono-2.0-sgen.lib"
 
 Library = {}
---Library["mono_debug"] = "%{LibraryDir.Mono_Debug}/libmono-static-sgen.lib"
---Library["mono_release"] = "%{LibraryDir.Mono_Release}/libmono-static-sgen.lib"
 Library["Vulkan"] = "%{LibraryDir.VulkanSDK}/vulkan-1.lib"
+Library["mono"] = "%{LibraryDir.Mono}/libmono-static-sgen.lib"
 Library["ShaderC_Debug"] = "%{LibraryDir.VulkanSDK}/shaderc_sharedd.lib"
 --Library["SPIRV_Cross_Debug"] = "%{LibraryDir.VulkanSDK}/spirv-cross-cored.lib"
 --Library["SPIRV_Cross_GLSL_Debug"] = "%{LibraryDir.VulkanSDK}/spirv-cross-glsld.lib"
@@ -50,12 +48,20 @@ Library["ShaderC_Release"] = "%{LibraryDir.VulkanSDK}/shaderc_shared.lib"
 --Library["SPIRV_Cross_Release"] = "%{LibraryDir.VulkanSDK}/spirv-cross-core.lib"
 --Library["SPIRV_Cross_GLSL_Release"] = "%{LibraryDir.VulkanSDK}/spirv-cross-glsl.lib"
 
+-- Windows only
+Library["WinSock"] = "Ws2_32.lib"
+Library["WinMM"] = "Winmm.lib"
+Library["WinVersion"] = "Version.lib"
+Library["BCrypt"] = "Bcrypt.lib"
+
 include "Engine/Vendor/glfw"
 include "Engine/Vendor/glad"
 include "Engine/Vendor/imgui"
 include "Engine/Vendor/yaml-cpp"
 include "Engine/Vendor/Box2D"
 include "Engine/Vendor/SPIRV-Cross"
+
+include "Engine-ScriptCore"
 
 
 -------------------------------------------------------------------------------
@@ -108,8 +114,7 @@ project "Engine"
         "ImGui",
 		"yaml-cpp",
 		"Box2D",
-		--"%{Library.mono}",
-		--"%{LibraryDir.mono}",
+		"%{Library.mono}",
 		"SPIRVCross",
         "opengl32.lib"
     }
@@ -125,6 +130,13 @@ project "Engine"
     filter "system:windows"
 		systemversion "latest"
         buildoptions { "/utf-8"}
+		links
+		{
+			"%{Library.WinSock}",
+			"%{Library.WinMM}",
+			"%{Library.WinVersion}",
+			"%{Library.BCrypt}",
+		}
     
     filter "configurations:Debug"
 		defines "DEBUG"
@@ -133,8 +145,6 @@ project "Engine"
 		links
 		{
 			"%{Library.ShaderC_Debug}",
-			"Engine/Vendor/mono/lib/Debug/libmono-static-sgen.lib",
-			--"%{Library.mono_debug}",
 			--"%{Library.SPIRV_Cross_Debug}",
 			--"%{Library.SPIRV_Cross_GLSL_Debug}"
 		}
@@ -146,8 +156,6 @@ project "Engine"
 		links
 		{
 			"%{Library.ShaderC_Release}",
-			"Engine/Vendor/mono/lib/Release/libmono-static-sgen.lib",
-			--"%{Library.mono_release}",
 			--"%{Library.SPIRV_Cross_Release}",
 			--"%{Library.SPIRV_Cross_GLSL_Release}"
 		}
@@ -268,20 +276,10 @@ project "Editor"
 		runtime "Debug"
 		symbols "on"
 
-		postbuildcommands 
-		{
-			'{COPYFILE} "../ENGINE/Vendor/mono/bin/Debug/mono-2.0-sgen.dll" "%{cfg.targetdir}"'
-		}
-
 	filter "configurations:Release"
 		defines "RELEASE"
 		runtime "Release"
 		optimize "on"
-
-		postbuildcommands 
-		{
-			'{COPYFILE} "../ENGINE/Vendor/mono/bin/Debug/mono-2.0-sgen.dll" "%{cfg.targetdir}"'
-		}
 
 	filter "configurations:Dist"
 		defines "DIST"
