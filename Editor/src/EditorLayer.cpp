@@ -46,7 +46,7 @@ namespace ENGINE
 		}
 		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 
-		Renderer2D::SetLineWidth(4.0f);
+		Renderer2D::SetLineWidth(8.0f);
 
 #if 0
 		// Entity
@@ -334,6 +334,7 @@ namespace ENGINE
 					glm::mat4 transform = glm::translate(glm::mat4(1.0f), translation)
 						* glm::rotate(glm::mat4(1.0f), tc.Rotation.z, glm::vec3(0.0f, 0.0f, 1.0f))
 						* glm::scale(glm::mat4(1.0f), scale);
+
 					Renderer2D::DrawRect(transform, glm::vec4(0, 1, 0, 1));
 				}
 			}
@@ -347,6 +348,7 @@ namespace ENGINE
 					glm::vec3 scale = tc.Scale * glm::vec3(cc2d.Radius * 2.0f);
 					glm::mat4 transform = glm::translate(glm::mat4(1.0f), translation)
 						* glm::scale(glm::mat4(1.0f), scale);
+
 					Renderer2D::DrawCircle(transform, glm::vec4(0, 1, 0, 1), 0.01f);
 				}
 			}

@@ -2,7 +2,7 @@ project "SpirvCross"
     kind "StaticLib"
     language "C++"
     cppdialect "C++17"
-    staticruntime "On"
+    staticruntime "off"
 
     targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
 	objdir ("bin-int/" .. OutputDir .. "/%{prj.name}")

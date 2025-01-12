@@ -58,6 +58,7 @@ void main()
     float distance = 1.0 - length(Input.LocalPosition);
     float circle = smoothstep(0.0, Input.Fade, distance);
     circle *= smoothstep(Input.Thickness + Input.Fade, Input.Thickness, distance);
+
 	if (circle == 0.0)
 		discard;
 

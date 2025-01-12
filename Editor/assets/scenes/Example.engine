@@ -1,0 +1,42 @@
+Scene: Untitled
+Entities:
+  - Entity: 14712930805610492371
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0, 3.6068046]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 0
+        PerspectiveFOV: 0.7853982
+        PerspectiveNear: 0.01
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 11342241429453013630
+    TagComponent:
+      Tag: Back
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [3.3999999, 3.3999999, 3.3999999]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: assets\textures\Checkerboard.png
+      TilingFactor: 4.3
+  - Entity: 3037878138604937709
+    TagComponent:
+      Tag: Front
+    TransformComponent:
+      Translation: [0.7399413, -0.21462652, 0.79552615]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: assets\textures\awesomeface.png
+      TilingFactor: 1

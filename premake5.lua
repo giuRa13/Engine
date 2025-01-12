@@ -27,20 +27,26 @@ IncludeDir["entt"] = "Engine/Vendor/entt/include"
 IncludeDir["yaml_cpp"] = "Engine/Vendor/yaml-cpp/include"
 IncludeDir["ImGuizmo"] = "Engine/Vendor/imGuizmo"
 IncludeDir["Box2D"] = "Engine/Vendor/Box2D/include"
+IncludeDir["mono"] = "Engine/Vendor/mono/include"
 IncludeDir["shaderc"] = "Engine/Vendor/shaderc/include"
 IncludeDir["SPIRVCross"] = "Engine/Vendor/SPIRV-Cross/include"
 IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
 
 LibraryDir = {}
 LibraryDir["VulkanSDK"] = "%{VULKAN_SDK}/Lib"
+--LibraryDir["Mono_Debug"] = "%{wks.location}/Engine/Vendor/mono/lib/Debug"
+--LibraryDir["Mono_Release"] = "%{wks.location}/Engine/Vendor/mono/lib/Release"
+--LibraryDir["mono"] = "Engine/Vendor/mono/lib/Debug/mono-2.0-sgen.lib"
 
 Library = {}
+--Library["mono_debug"] = "%{LibraryDir.Mono_Debug}/libmono-static-sgen.lib"
+--Library["mono_release"] = "%{LibraryDir.Mono_Release}/libmono-static-sgen.lib"
 Library["Vulkan"] = "%{LibraryDir.VulkanSDK}/vulkan-1.lib"
 Library["ShaderC_Debug"] = "%{LibraryDir.VulkanSDK}/shaderc_sharedd.lib"
 --Library["SPIRV_Cross_Debug"] = "%{LibraryDir.VulkanSDK}/spirv-cross-cored.lib"
 --Library["SPIRV_Cross_GLSL_Debug"] = "%{LibraryDir.VulkanSDK}/spirv-cross-glsld.lib"
 --Library["SPIRV_Tools_Debug"] = "%{LibraryDir.VulkanSDK}/SPIRV-Toolsd.lib"
---Library["ShaderC_Release"] = "%{LibraryDir.VulkanSDK}/shaderc_shared.lib"
+Library["ShaderC_Release"] = "%{LibraryDir.VulkanSDK}/shaderc_shared.lib"
 --Library["SPIRV_Cross_Release"] = "%{LibraryDir.VulkanSDK}/spirv-cross-core.lib"
 --Library["SPIRV_Cross_GLSL_Release"] = "%{LibraryDir.VulkanSDK}/spirv-cross-glsl.lib"
 
@@ -58,7 +64,7 @@ project "Engine"
     kind "StaticLib"
     language "C++"
     cppdialect "C++17"
-    staticruntime "on"
+    staticruntime "off"
 
     targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
     objdir ("bin-int/" .. OutputDir .. "/%{prj.name}")
@@ -90,8 +96,9 @@ project "Engine"
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.Box2D}",
+		"%{IncludeDir.mono}",
 		"%{IncludeDir.VulkanSDK}",
-		"%{IncludeDir.SPIRVCross}"
+		"%{IncludeDir.SPIRVCross}",
     }
 
     links
@@ -101,6 +108,8 @@ project "Engine"
         "ImGui",
 		"yaml-cpp",
 		"Box2D",
+		--"%{Library.mono}",
+		--"%{LibraryDir.mono}",
 		"SPIRVCross",
         "opengl32.lib"
     }
@@ -110,6 +119,7 @@ project "Engine"
         --"GLFW_INCLUDE_NONE",
 		"YAML_CPP_STATIC_DEFINE",
 		"VK_USE_PLATFORM_WIN32_KHR",
+		"MONO_USE_STATICLIB_MONO"
     }
 
     filter "system:windows"
@@ -123,6 +133,8 @@ project "Engine"
 		links
 		{
 			"%{Library.ShaderC_Debug}",
+			"Engine/Vendor/mono/lib/Debug/libmono-static-sgen.lib",
+			--"%{Library.mono_debug}",
 			--"%{Library.SPIRV_Cross_Debug}",
 			--"%{Library.SPIRV_Cross_GLSL_Debug}"
 		}
@@ -131,12 +143,14 @@ project "Engine"
 		defines "RELEASE"
 		runtime "Release"
 		optimize "on"
-		--[[links
+		links
 		{
 			"%{Library.ShaderC_Release}",
-			"%{Library.SPIRV_Cross_Release}",
-			"%{Library.SPIRV_Cross_GLSL_Release}"
-		}]]--
+			"Engine/Vendor/mono/lib/Release/libmono-static-sgen.lib",
+			--"%{Library.mono_release}",
+			--"%{Library.SPIRV_Cross_Release}",
+			--"%{Library.SPIRV_Cross_GLSL_Release}"
+		}
 
 	filter "configurations:Dist"
 		defines "DIST"
@@ -150,7 +164,7 @@ project "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
     cppdialect "C++17"
-    staticruntime "on"
+    staticruntime "off"
 
 	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
 	objdir ("bin-int/" .. OutputDir .. "/%{prj.name}")
@@ -210,7 +224,7 @@ project "Editor"
 	kind "ConsoleApp"
 	language "C++"
     cppdialect "C++17"
-    staticruntime "on"
+    staticruntime "off"
 
 	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
 	objdir ("bin-int/" .. OutputDir .. "/%{prj.name}")
@@ -254,10 +268,20 @@ project "Editor"
 		runtime "Debug"
 		symbols "on"
 
+		postbuildcommands 
+		{
+			'{COPYFILE} "../ENGINE/Vendor/mono/bin/Debug/mono-2.0-sgen.dll" "%{cfg.targetdir}"'
+		}
+
 	filter "configurations:Release"
 		defines "RELEASE"
 		runtime "Release"
 		optimize "on"
+
+		postbuildcommands 
+		{
+			'{COPYFILE} "../ENGINE/Vendor/mono/bin/Debug/mono-2.0-sgen.dll" "%{cfg.targetdir}"'
+		}
 
 	filter "configurations:Dist"
 		defines "DIST"

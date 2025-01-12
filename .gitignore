@@ -3,11 +3,13 @@
 .vscode/
 bin/
 bin-int/
+Intermediates/
 
 # Files
-*.vcxproj
-*.vcxproj.user
-*.vcxproj.filters
-*.sln
-*.log
+**.vcxproj
+**.vcxproj.user
+**.vcxproj.filters
+**.csproj
+**.sln
+**.log
 Makefile
