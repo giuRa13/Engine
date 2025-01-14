@@ -45,6 +45,7 @@ namespace ENGINE
 		}
 		
 		void DuplicateEntity(Entity entity);
+		Entity GetEntityByUUID(UUID uuid);
 
 
 	private:
@@ -59,6 +60,8 @@ namespace ENGINE
 		uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
 
 		b2World* m_PhysicsWorld = nullptr;
+
+		std::unordered_map<UUID, entt::entity> m_EntityMap;
 
 		friend class Entity;
 		friend class SceneHierarchyPanel;

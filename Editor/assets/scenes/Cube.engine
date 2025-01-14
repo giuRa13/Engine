@@ -1,12 +1,47 @@
 Scene: Untitled
 Entities:
+  - Entity: 922983742307563910
+    TagComponent:
+      Tag: Top
+    TransformComponent:
+      Translation: [-0.34800184, 0.5181369, 0.06318621]
+      Rotation: [1.5731196, -0.19434342, -0.0036802057]
+      Scale: [1, 0.999833, 0.9998137]
+    SpriteRendererComponent:
+      Color: [0.90643275, 0.6095893, 0.86997825, 1]
+      TilingFactor: 1
+  - Entity: 15784496946076765462
+    TagComponent:
+      Tag: Right
+    TransformComponent:
+      Translation: [0.14429441, 0.01589954, 0.1617888]
+      Rotation: [0.011631824, 1.3754165, 0.009505436]
+      Scale: [1.0000019, 1, 1.0000018]
+    ScriptComponent:
+      ClassName: Sandbox.Player
+    SpriteRendererComponent:
+      Color: [0.8596491, 0.4675285, 0.83901125, 1]
+      TilingFactor: 1
+  - Entity: 2829565417996686595
+    TagComponent:
+      Tag: Left
+    TransformComponent:
+      Translation: [-0.441568, 0.01763669, 0.5560009]
+      Rotation: [-0.0013728205, -0.19299474, 0.0010253224]
+      Scale: [0.9999984, 0.9999577, 0.9999984]
+    SpriteRendererComponent:
+      Color: [0.6365718, 0.32358673, 0.6666666, 1]
+      TilingFactor: 1
+    Rigidbody2DComponent:
+      BodyType: Static
+      FixedRotation: false
   - Entity: 15605830419950455463
     TagComponent:
       Tag: Camera
     TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
+      Translation: [1.6078495, 1.2988689, 2.7326708]
+      Rotation: [-0.30754384, 0.6270391, -2.7602638e-08]
+      Scale: [0.99999976, 1, 0.9999999]
     CameraComponent:
       Camera:
         ProjectionType: 0
@@ -18,33 +53,3 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 2829565417996686595
-    TagComponent:
-      Tag: Left
-    TransformComponent:
-      Translation: [-0.441568, 0.01763669, 0.5560009]
-      Rotation: [-0.0013728205, -0.19299474, 0.0010253224]
-      Scale: [0.9999984, 0.9999577, 0.9999984]
-    SpriteRendererComponent:
-      Color: [0.6365718, 0.32358673, 0.6666666, 1]
-    Rigidbody2DComponent:
-      BodyType: Static
-      FixedRotation: false
-  - Entity: 15784496946076765462
-    TagComponent:
-      Tag: Right
-    TransformComponent:
-      Translation: [0.14429441, 0.01589954, 0.1617888]
-      Rotation: [0.011631824, 1.3754165, 0.009505436]
-      Scale: [1.0000019, 1, 1.0000018]
-    SpriteRendererComponent:
-      Color: [0.8596491, 0.4675285, 0.83901125, 1]
-  - Entity: 922983742307563910
-    TagComponent:
-      Tag: Top
-    TransformComponent:
-      Translation: [-0.34800184, 0.5181369, 0.06318621]
-      Rotation: [1.5731196, -0.19434342, -0.0036802057]
-      Scale: [1, 0.999833, 0.9998137]
-    SpriteRendererComponent:
-      Color: [0.90643275, 0.6095893, 0.86997825, 1]
