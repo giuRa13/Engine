@@ -14,7 +14,7 @@ Entities:
     TagComponent:
       Tag: Right
     TransformComponent:
-      Translation: [0.14429441, 0.01589954, 0.1617888]
+      Translation: [0.14429441, 0.015899539, 0.1617888]
       Rotation: [0.011631824, 1.3754165, 0.009505436]
       Scale: [1.0000019, 1, 1.0000018]
     ScriptComponent:
@@ -22,6 +22,9 @@ Entities:
     SpriteRendererComponent:
       Color: [0.8596491, 0.4675285, 0.83901125, 1]
       TilingFactor: 1
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
   - Entity: 2829565417996686595
     TagComponent:
       Tag: Left
@@ -53,3 +56,5 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
+    ScriptComponent:
+      ClassName: Sandbox.Camera

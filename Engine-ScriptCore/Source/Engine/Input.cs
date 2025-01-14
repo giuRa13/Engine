@@ -7,7 +7,6 @@
         {
             return InternalCalls.Input_IsKeyDown(keycode);
         }
-
     }
 
 }

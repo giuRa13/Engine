@@ -46,7 +46,7 @@ namespace ENGINE
 		//Ref<VertexArray> m_SquareVA;
 		//Ref<Shader> m_FlatColorShader;
 		Ref<Texture2D> m_CheckerboardTexture;
-		Ref<Texture2D> m_IconPlay, m_IconStop, m_IconSimulate;
+		Ref<Texture2D> m_IconPlay, m_IconStop, m_IconSimulate, m_CameraIcon;
 		glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 		glm::vec3 m_SquarePosition = { 0.5f, -0.6f, 0.1f };
 		float m_SquareMoveSpeed = 2.0f;

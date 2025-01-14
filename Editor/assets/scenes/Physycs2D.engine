@@ -1,5 +1,26 @@
 Scene: Untitled
 Entities:
+  - Entity: 13342124611469586611
+    TagComponent:
+      Tag: Entity
+    TransformComponent:
+      Translation: [2.145453, 11.580989, 0]
+      Rotation: [0, 0, 1.5738064]
+      Scale: [0.99999607, 0.99999607, 1]
+    SpriteRendererComponent:
+      Color: [0.83459586, 0.27837628, 0.8654971, 1]
+      TexturePath: assets\textures\Checkerboard.png
+      TilingFactor: 1
+    Rigidbody2DComponent:
+      BodyType: Dynamic
+      FixedRotation: false
+    BoxCollider2DComponent:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Density: 1
+      Friction: 0.5
+      Restitution: 0.33
+      RestitutionThreshold: 0.5
   - Entity: 11189024207394502089
     TagComponent:
       Tag: Entity2
@@ -19,15 +40,15 @@ Entities:
       Radius: 0.5
       Density: 1
       Friction: 0.15
-      Restitution: 0.31
+      Restitution: 0.51
       RestitutionThreshold: 0.5
   - Entity: 16366664367341296887
     TagComponent:
       Tag: Entity5
     TransformComponent:
-      Translation: [2.641881, 23.36635, 0]
-      Rotation: [0, 0, 0.0043196282]
-      Scale: [0.9999768, 0.9999768, 1]
+      Translation: [2.641881, 23.36635, -4.656613e-10]
+      Rotation: [0, 0, 0.00431963]
+      Scale: [0.9999764, 0.9999764, 1]
     CircleRendererComponent:
       Color: [0.07944326, 0.47405392, 0.5906433, 1]
       Thickness: 1
@@ -40,7 +61,7 @@ Entities:
       Radius: 0.5
       Density: 1
       Friction: 0.15
-      Restitution: 0.33
+      Restitution: 0.51
       RestitutionThreshold: 0.5
   - Entity: 15936523887250559935
     TagComponent:
@@ -107,9 +128,9 @@ Entities:
     TagComponent:
       Tag: Entity4
     TransformComponent:
-      Translation: [0.17569292, 10.446138, 0]
+      Translation: [0.17569399, 10.446138, 0]
       Rotation: [0, 0, 3.1405277]
-      Scale: [1.0000104, 1.0000104, 1]
+      Scale: [1.0000144, 1.0000144, 1]
     CircleRendererComponent:
       Color: [0.07944326, 0.47405392, 0.5906433, 1]
       Thickness: 1
@@ -122,7 +143,7 @@ Entities:
       Radius: 0.5
       Density: 1
       Friction: 0.08
-      Restitution: 0.34
+      Restitution: 0.51
       RestitutionThreshold: 0.5
   - Entity: 4863074749554438557
     TagComponent:
@@ -223,6 +244,8 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
+    ScriptComponent:
+      ClassName: Sandbox.Camera
   - Entity: 13316010912625760240
     TagComponent:
       Tag: Floor3
@@ -245,13 +268,15 @@ Entities:
       RestitutionThreshold: 0.5
   - Entity: 14321659811140172031
     TagComponent:
-      Tag: Entity
+      Tag: Entity Script
     TransformComponent:
-      Translation: [2.145453, 11.580989, 0]
+      Translation: [1.5022475, -5.141919, 0]
       Rotation: [0, 0, 1.5738064]
-      Scale: [0.99999666, 0.99999666, 1]
+      Scale: [0.99998903, 0.99998903, 1]
+    ScriptComponent:
+      ClassName: Sandbox.Player
     SpriteRendererComponent:
-      Color: [0.83459586, 0.27837628, 0.8654971, 1]
+      Color: [0.91866314, 0.7177594, 0.9298246, 1]
       TexturePath: assets\textures\Checkerboard.png
       TilingFactor: 1
     Rigidbody2DComponent:

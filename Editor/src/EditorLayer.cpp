@@ -26,6 +26,7 @@ namespace ENGINE
 		m_IconPlay = Texture2D::Create("assets/editor/play-circle32.png");
 		m_IconStop = Texture2D::Create("assets/editor/stop-circle32.png");
 		m_IconSimulate = Texture2D::Create("assets/editor/scatter-plot.png");
+		m_CameraIcon = Texture2D::Create("assets/editor/camera.png");
 
 		ENGINE::FramebufferSpecification fbSpec;
 		fbSpec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
@@ -355,9 +356,20 @@ namespace ENGINE
 		}
 
 		// Draw selected entity outline 
-		if (Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity()) {
-			TransformComponent transform = selectedEntity.GetComponent<TransformComponent>();
+		if (Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity()) 
+		{
+			if (selectedEntity.HasComponent<CameraComponent>())
+			{	
+				// Camera Icon
+				auto view = m_ActiveScene->GetAllEntitiesWith<TransformComponent, CameraComponent>();
+				for (auto entity : view)
+				{
+					auto [tc, cc] = view.get<TransformComponent, CameraComponent>(entity);
+					Renderer2D::DrawQuad(tc.GetTransform(), m_CameraIcon);
+				}
+			}
 
+			TransformComponent transform = selectedEntity.GetComponent<TransformComponent>();
 			Renderer2D::DrawRect(transform.GetTransform(), glm::vec4(1, 0, 0, 1));
 		}
 

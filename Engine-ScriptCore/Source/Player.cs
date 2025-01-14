@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 using ENGINE;
 
@@ -8,37 +12,45 @@ namespace Sandbox
 
     public class Player : Entity
     {
+        private TransformComponent m_Transform;
+        private Rigidbody2DComponent m_Rigidbody;
 
         void OnCreate()
         {
             Console.WriteLine($"Player.OnCreate - {ID}");
+
+            m_Transform = GetComponent<TransformComponent>();
+            m_Rigidbody = GetComponent<Rigidbody2DComponent>();
+
+            //bool hasTransform = HasComponent<TransformComponent>();
+            //Console.WriteLine("{0}", hasTransform);
         }
 
 
         void OnUpdate(float ts)
         {
-            Console.WriteLine($"Player.OnUpdate: {ts}");
+            //Console.WriteLine($"Player.OnUpdate: {ts}");
 
-            float speed = 0.8f;
-            Vector3 velocity = Vector3.Zero;
+            float speed = 0.5f;
+             Vector3 velocity = Vector3.Zero;
 
-            //Vector3 translation = Translation;
-            //translation.X += speed * ts;
-            //Translation = translation;
+             if (Input.IsKeyDown(KeyCode.W))
+                 velocity.Y = 1.0f;
+             else if (Input.IsKeyDown(KeyCode.S))
+                 velocity.Y = -1.0f;
 
-            if (Input.IsKeyDown(KeyCode.W))
-                velocity.Y = 1.0f;
-            else if (Input.IsKeyDown(KeyCode.S))
-                velocity.Y = -1.0f;
-            if (Input.IsKeyDown(KeyCode.A))
-                velocity.X = -1.0f;
-            else if (Input.IsKeyDown(KeyCode.D))
-                velocity.X = 1.0f;
+             if (Input.IsKeyDown(KeyCode.A))
+                 velocity.X = -1.0f;
+             else if (Input.IsKeyDown(KeyCode.D))
+                 velocity.X = 1.0f;
 
-            velocity *= speed;
-            Vector3 translation = Translation;
-            translation += velocity * ts;
-            Translation = translation;
+             velocity *= speed;
+
+             m_Rigidbody.ApplyLinearImpulse(velocity.XY, true);
+
+             //Vector3 translation = Translation;
+             //translation += velocity * ts;
+             //Translation = translation;
         }
     }
 

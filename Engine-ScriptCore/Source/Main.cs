@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Runtime.CompilerServices;
 
 
@@ -58,34 +58,7 @@ namespace ENGINE
     }
 
 
-	public class Entity
-	{
-		protected Entity() { ID = 0; }
-
-		internal Entity(ulong id)
-		{
-			ID = id;
-		}
-
-		public readonly ulong ID;
-
-		public Vector3 Translation
-		{
-			get
-			{
-				InternalCalls.Entity_GetTranslation(ID, out Vector3 translation);
-				return translation;
-			}
-
-			set
-			{
-				InternalCalls.Entity_SetTranslation(ID, ref value);
-			}
-		}
-	}
-
-
-    /*public class Entity
+    public class Entity
 	{
 		public float FloatVar { get; set; }
 		
@@ -129,6 +102,6 @@ namespace ENGINE
             InternalCalls.NativeLog_Vector(ref parameter, out Vector3 result);
 			return result;
         }
-    }*/
+    }
 
-}
+}*/
