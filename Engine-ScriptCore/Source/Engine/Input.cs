@@ -1,7 +1,7 @@
 ﻿namespace ENGINE
 {
 
-    internal class Input
+    public class Input
     {
         public static bool IsKeyDown(KeyCode keycode)
         {
